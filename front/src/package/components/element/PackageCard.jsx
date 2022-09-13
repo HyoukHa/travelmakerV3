@@ -94,6 +94,7 @@ const PackageCard = ({ step, wish }) => {
           style={{ textAlign: "center", fontSize: "strong" }}
           variant="body2"
           color="text.secondary"
+          component="div"
         >
           <Grid container justifyContent={"space-evenly"}>
             {"참여인원"}

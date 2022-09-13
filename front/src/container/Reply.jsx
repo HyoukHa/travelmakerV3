@@ -129,7 +129,9 @@ const Reply = ({ boardId }) => {
                     )}
 
                     <ListItemText primary={row.content} />
-                    {JSON.parse(getSession("userInfo")).userId == row.userId ? (
+                    {(getSession("userInfo") !== null &&
+                      JSON.parse(getSession("userInfo")).rank === 1) ||
+                    JSON.parse(getSession("userInfo")).id === row.userId ? (
                       <IconButton
                         className="cursor"
                         edge="end"
