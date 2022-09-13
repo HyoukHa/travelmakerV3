@@ -35,7 +35,7 @@ const PageRouter = () => {
           <Route exact path="/user/following/:id" element={<FollowingList />} />
           <Route
             exact
-            path={`/board/package/detail/1`}
+            path={`/board/package/detail/:boardId`}
             element={<PackageBoardDetail />}
           />
           <Route exact path="/board/package/:id" element={<PackageBoard />} />
