@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bit.travelmaker.back.mapper.ReplyMapper">
+    <select id="findByBoardId" parameterType="int" resultType="HashMap">
+        select r.id as id,
+               r.userId as userId,
+               u.nickname as userNick,
+               u.src_photo as userImg,
+               r.written_date as writtenDate,
+               r.content as content
+        from reply as r inner join user as u on r.userid = u.id where r.boardId = #{boardId};
+    </select>
+</mapper>

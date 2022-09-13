@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\dev"
+		},
+		{
+			"path": "..\\..\\Desktop\\그리드 아일랜드\\개발일지\\BIT221\\STUDY\\Vanilla_JS"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Vanilla_JS"
+	}
+}

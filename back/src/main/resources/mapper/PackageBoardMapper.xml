@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bit.travelmaker.back.mapper.PackageBoardMapper">
+    <select id="getDetailPackage" parameterType="int" resultType="HashMap">
+        select * from board as b inner join packageboard as p on b.id = p.id inner join user as u on b.userId = u.id where b.id = #{boardId};
+    </select>
+
+    <select id="viewCounter">
+        update board set viewcount = #{viewCount} where id = #{id}
+    </select>
+
+    <select id="PKCardPusher" parameterType="int" resultType="OutPackageCard">
+        select b.id, b.userId, b.title, b.imgs as contentImg, b.written_date, u.src_photo as userImg, p.budget, p.duration, p.limit_to, p.current_to from `board` as b
+                inner join `user` as u on b.userId = u.id
+                inner join `packageboard` as p on b.id = p.id
+                order by b.id desc
+                limit #{pageNum} , 8;
+    </select>
+
+    <select id="myPKCardPusher" parameterType="int" resultType="OutPackageCard">
+        select b.id, b.userId, b.title, b.imgs as contentImg, b.written_date, u.src_photo as userImg, p.budget, p.duration from `board` as b
+            inner join `user` as u on b.userId = u.id
+            inner join `packageboard` as p on b.id = p.id
+            where b.userId = #{userId}
+        order by b.id desc
+    </select>
+
+    <select id="packageCounter" resultType="int">
+        select count(id) from packageboard;
+    </select>
+
+    <select id="myPackageCounter" parameterType="int" resultType="int">
+        select count(p.id) from packageboard as p
+                                    inner join board as b on p.id = b.id
+        where b.userId = #{userId};
+    </select>
+
+    <select id="findIdByUserIdAndBoardId" parameterType="HashMap" resultType="Integer">
+        select id from wishlist where userId = #{userId} and boardId = #{boardId};
+    </select>
+
+    <insert id="doWish" parameterType="HashMap">
+        insert into wishlist(userid, boardid) values(#{userId}, #{boardId});
+    </insert>
+
+    <delete id="undoWish" parameterType="int">
+        delete from wishlist where id = #{id}
+    </delete>
+
+    <select id="isWish" parameterType="List" resultType="HashMap">
+        select * from wishlist where userId = #{userId} and boardId in
+        <foreach collection="boardList" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

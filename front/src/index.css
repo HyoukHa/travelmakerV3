@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "SpoqaHanSans", sans-serif;
+  letter-spacing: -0.02em;
+  scrollbar-color: hsl(227, 3%, 80%) transparent;
+  scrollbar-width: thin;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@font-face {
+  font-family: "SpoqaHanSans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./fonts/SpoqaHanSansNeo-Regular.woff2") format("woff2");
+  font-display: swap;
+  line-height: 2;
+}
+@font-face {
+  font-family: "SpoqaHanSans";
+  font-style: normal;
+  font-weight: 500;
+  src: url("./fonts/SpoqaHanSansNeo-Medium.woff2") format("woff2");
+  font-display: swap;
+  line-height: 2;
+}
+@font-face {
+  font-family: "SpoqaHanSans";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./fonts/SpoqaHanSansNeo-Bold.woff2") format("woff2");
+  font-display: swap;
+  line-height: 2;
+}

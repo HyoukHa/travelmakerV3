@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bit.travelmaker.back.mapper.UserMapper">
+    <insert id="save" parameterType="user" useGeneratedKeys="true">
+        INSERT INTO user(
+                         username,
+                         password,
+                         email,
+                         nickname,
+                         f_name,
+                         l_name,
+                         emailauth,
+                         rank
+        ) VALUES (
+                  #{username},
+                  #{password},
+                  #{email},
+                  #{nickname},
+                  #{f_name},
+                  #{l_name},
+                  #{emailauth},
+                  #{rank});
+    </insert>
+
+    <update id="disabled" parameterType="int">
+        update user set disabled = 1 where id = #{id};
+    </update>
+
+    <select id="getUserList" resultType="HashMap">
+        select id, username, nickname, email, rank from user;
+    </select>
+
+    <update id="updateRank" parameterType="HashMap">
+        update user set rank = #{rank} where id = #{id};
+    </update>
+</mapper>

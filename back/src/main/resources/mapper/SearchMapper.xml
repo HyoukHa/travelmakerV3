@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bit.travelmaker.back.mapper.SearchMapper">
+    <select id="getSearchingResult" parameterType="String" resultType="HashMap">
+        select * from board as b
+                          inner join user as u on b.userId = u.id
+                          left outer join packageboard as p on b.id = p.id
+                          left outer join reviewboard as r on b.id = r.id
+        where b.title like CONCAT('%', #{keyword}, '%');
+    </select>
+
+
+</mapper>

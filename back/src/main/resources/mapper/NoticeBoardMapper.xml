@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bit.travelmaker.back.mapper.NoticeBoardMapper">
+    <select id="NoticeBoardList" parameterType="int" resultType="OutNotice">
+        select b.id, b.userId,b.category, b.title, b.content, b.written_date, b.updated_date, b.viewCount, b.tags, b.imgs, b.videos, u.nickname from board as b inner join user as u on b.userId = u.id
+        where category = #{category} and title like '%공지사항%' order by b.id desc limit 30 ;
+    </select>
+
+    <select id="EventBoardList" parameterType="int" resultType="OutNotice">
+        select b.id, b.userId,b.category, b.title, b.content, b.written_date, b.updated_date, b.viewCount, b.tags, b.imgs, b.videos, u.nickname from board as b inner join user as u on b.userId = u.id
+        where category = #{category} and title like '%이벤트%' ;
+    </select>
+
+    <select id="NoticeBoardUpdate" parameterType="int" resultType="OutNotice">
+        select b.id, b.userId,b.category, b.title, b.content, b.written_date, b.updated_date, b.viewCount, b.tags, b.imgs, b.videos, u.nickname from board as b inner join user as u on b.userId = u.id
+        where b.id = #{id};
+    </select>
+
+</mapper>
