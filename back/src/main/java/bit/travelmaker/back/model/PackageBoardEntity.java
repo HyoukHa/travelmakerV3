@@ -15,13 +15,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "sellerboard")
+@Table(name = "packageboard")
 public class PackageBoardEntity {
     /**
      * foreign key(id) references board(id)
@@ -43,5 +44,9 @@ public class PackageBoardEntity {
 
     private Integer duration;
 
+    private String location;
+
     private Integer budget;
+
+    private Date start_date;
 }

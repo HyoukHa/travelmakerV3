@@ -92,16 +92,26 @@ const Reply = ({ boardId }) => {
         <Grid className="reply" container spacing={1} maxWidth={`768px`}>
           <div className="write_reply">
             <TextField
+              fullWidth={true}
               id="standard-basic"
-              label="댓글을 입력해주세요"
+              label={
+                getSession("userInfo") === null
+                  ? "로그인이 필요한 기능입니다."
+                  : "댓글을 입력해주세요"
+              }
               value={reply.content}
+              disabled={getSession("userInfo") === null}
               onChange={(e) => {
                 setReply({ ...reply, content: e.target.value });
               }}
               variant="standard"
             />
-
-            <Button onClick={handleBtnClick}>작성</Button>
+            <Button
+              disabled={getSession("userInfo") === null}
+              onClick={handleBtnClick}
+            >
+              작성
+            </Button>
           </div>
           <Grid item xs={12} md={12}>
             <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
@@ -129,7 +139,20 @@ const Reply = ({ boardId }) => {
                     )}
 
                     <ListItemText primary={row.content} />
-                    {(getSession("userInfo") !== null &&
+                    {getSession("userInfo") !== null ? (
+                      JSON.parse(getSession("userInfo")).rank === 1 ||
+                      JSON.parse(getSession("userInfo")).id === row.userId ? (
+                        <IconButton
+                          className="cursor"
+                          edge="end"
+                          aria-label="delete"
+                          onClick={deleteHandler(row.id)}
+                        >
+                          <DeleteIcon className="cursor" />
+                        </IconButton>
+                      ) : null
+                    ) : null}
+                    {/* {(getSession("userInfo") !== null &&
                       JSON.parse(getSession("userInfo")).rank === 1) ||
                     JSON.parse(getSession("userInfo")).id === row.userId ? (
                       <IconButton
@@ -140,7 +163,7 @@ const Reply = ({ boardId }) => {
                       >
                         <DeleteIcon className="cursor" />
                       </IconButton>
-                    ) : null}
+                    ) : null} */}
                   </ListItem>
                 );
               })}

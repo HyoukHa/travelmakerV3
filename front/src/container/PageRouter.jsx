@@ -15,7 +15,7 @@ import { NotFoundPage } from "../common/index";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import MyInfoUpdate from "./MyInfoUpdate";
-import { PackageBoardDetail } from "./PackageBoardDetail";
+import PackageBoardDetail from "./PackageBoardDetail";
 import FollowerList from "./follow/FollowerList";
 import FollowingList from "./follow/FollowingList";
 import Announcement from "../noti/components/Announcement";

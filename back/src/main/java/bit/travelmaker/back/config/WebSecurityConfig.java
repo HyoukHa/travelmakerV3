@@ -40,6 +40,7 @@ public class WebSecurityConfig {
                                 .antMatchers("/api/mail/send").permitAll()
                                 .antMatchers("/api/user/manage", "/api/user/manage/update").hasAnyRole("ADMIN")
                                 .antMatchers("/api/packageboard/write", "/api/packageboard/wish", "/api/packageboard/iswish").hasAnyRole("USER", "PACKAGER", "ADMIN")
+                                .antMatchers("/api/packageboard/join", "/api/packageboard/isjoin").hasAnyRole("USER", "PACKAGER", "ADMIN")
                                 .antMatchers("/api/packageboard/**").permitAll()
                                 .antMatchers("/api/reply/**").permitAll()
                                 .antMatchers("/api/search").permitAll()

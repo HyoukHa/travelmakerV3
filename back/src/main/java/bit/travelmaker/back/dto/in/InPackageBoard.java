@@ -1,55 +1,35 @@
-package bit.travelmaker.back.model;
+package bit.travelmaker.back.dto.in;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.ibatis.type.Alias;
 
-import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity
-@Table(name = "board")
-/**
- * BoardEntity
- *
- * 작성자 : 권혁하 <mindcypher97@gmail.com>
- * board table 에 매핑되는 entity
- */
-public class BoardEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@Alias(value = "packageBoard")
+public class InPackageBoard {
     private Integer id;
-
-    @NotNull
     private Integer userId;
-
-    @NotNull
     private Integer category;
-    // 1. 공지  2. 패키지  3. 후기
-
-    @NotNull
     private String title;
-
-    @NotNull
     private String content;
-
     private Date written_date;
-
     private Date updated_date;
-
-    @NotNull
     private Integer viewCount;
-
     private String tags;
-
     private String imgs;
-
     private String videos;
+
+    private Integer limit_to;
+    private Integer current_to;
+    private Integer duration;
+    private Integer budget;
+    private String location;
+    private Date start_date;
 }

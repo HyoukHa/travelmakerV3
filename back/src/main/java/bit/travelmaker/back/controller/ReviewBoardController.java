@@ -10,4 +10,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/board/review")
 public class ReviewBoardController {
 //    @Autowired
+//    private ReviewBoard
 }

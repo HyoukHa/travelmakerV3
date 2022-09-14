@@ -9,9 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -20,13 +19,6 @@ public class PackageBoardController {
 
     @Autowired
     private PackageBoardService packageBoardService;
-
-    @GetMapping(value = "")
-    public ResponseEntity<?> getPackage() {
-        HttpStatus status = HttpStatus.OK;
-
-        return new ResponseEntity<>(status);
-    }
 
     /**
      * 패키지 상세보기 요청시 데이터를 전송해주는 메소드
@@ -65,17 +57,74 @@ public class PackageBoardController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 패키지 게시판에 글을 작성하는 메소드
+     */
     @PostMapping(value = "/write")
-    public ResponseEntity<?> writePackage(@RequestBody HashMap<String, Object> req) {
+    public ResponseEntity<?> writePackage(@AuthenticationPrincipal int userId ,@RequestBody HashMap<String, Object> req) {
         HttpStatus status = HttpStatus.OK;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, (Integer)req.get("year"));
+        calendar.set(Calendar.MONTH, (Integer)req.get("month"));
+        calendar.set(Calendar.DATE, (Integer)req.get("day"));
+        Date date = calendar.getTime();
+
+        System.out.println(date);
+
+        req.put("startdate", date);
+
+        req.put("userId", userId);
 
         System.out.println(req);
 
-        return new ResponseEntity<>(req, status);
+        Integer res = packageBoardService.writePackageBoard(req);
+
+        return new ResponseEntity<>(res, status);
+    }
+
+    /**
+     * 패키지 참여 버튼을 누르면 사용되는 메소드
+     * Boolean 값을 리턴한다.
+     */
+    @PostMapping(value = "/join")
+    public ResponseEntity<?> joinPackage(@AuthenticationPrincipal int userId, @RequestBody int packageId) {
+        HttpStatus status = HttpStatus.OK;
+
+        HashMap<String, Integer> req = new HashMap<>();
+
+        req.put("userId", userId);
+        req.put("packageId", packageId);
+
+        System.out.println(req);
+        Boolean res = packageBoardService.doJoin(req);
+
+        return new ResponseEntity<>(res, status);
+    }
+
+    /**
+     * packageboard/detail 페이지에 들어갔을때 로그인이 되어있다면 호출되는 메소드
+     * 현재 사용자가 해당 패키지에 참여하고 있는지 여부를 확인해준다.
+     */
+    @PostMapping(value = "/isjoin")
+    public ResponseEntity<?> isJoin(@AuthenticationPrincipal int userId, @RequestBody int packageId) {
+        HttpStatus status = HttpStatus.OK;
+
+        HashMap<String, Integer> req = new HashMap<>();
+
+        req.put("userId", userId);
+        req.put("packageId", packageId);
+
+        System.out.println(req);
+        Boolean res = packageBoardService.isJoin(req);
+        System.out.println(res);
+
+        return new ResponseEntity<>(res, status);
     }
 
     @PostMapping(value = "/wish")
-    public ResponseEntity<?> doWish(@AuthenticationPrincipal int userId,@RequestBody int boardId) {
+    public ResponseEntity<?> doWish(@AuthenticationPrincipal int userId, @RequestBody int boardId) {
         HttpStatus status = HttpStatus.OK;
 
         HashMap<String, Object> req = new HashMap<>();

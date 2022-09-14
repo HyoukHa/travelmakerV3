@@ -12,13 +12,8 @@
  */
 
 import React, { useEffect, useState } from "react";
-import Header from "../common/components/include/Header";
 import Carousel from "../common/components/carousel/Carousel";
-import { Container, display } from "@mui/system";
-import ReactPlayer from "react-player";
-import { Button, TextField } from "@mui/material";
 import SearchBar from "../common/components/search/SearchBar";
-import { Reply } from "./index";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -32,44 +27,37 @@ const images = [
   {
     label: "Bird",
     title: "good",
-    imgPath:
-      "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
+    imgs: "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
   },
   {
     label: "Bali, Indonesia",
     title: "good",
-    imgPath:
-      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
+    imgs: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
   },
   {
     label: "Goč, Serbia",
     title: "good",
-    imgPath:
-      "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
+    imgs: "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
   },
   {
     label: "lgh",
     title: "good",
-    imgPath:
-      "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
+    imgs: "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
   },
   {
     label: "Bird",
     title: "good",
-    imgPath:
-      "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
+    imgs: "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
   },
   {
     label: "Bali, Indonesia",
     title: "good",
-    imgPath:
-      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
+    imgs: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
   },
   {
     label: "Goč, Serbia",
     title: "good8",
-    imgPath:
-      "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
+    imgs: "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
   },
 ];
 
@@ -80,7 +68,7 @@ const Landing = () => {
     checked: false,
   });
 
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
 
   return (
     <div css={cssWrapper}>

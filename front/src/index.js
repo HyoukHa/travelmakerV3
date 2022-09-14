@@ -8,8 +8,8 @@ import { BrowserRouter } from "react-router-dom";
 import { StoreProvider } from "./stores/Context";
 import { RootStore } from "./stores/RootStore.jsx";
 
-// axios.defaults.baseURL = "http://localhost:8080/api";
-axios.defaults.baseURL = "http://192.168.230.54:8080/api";
+axios.defaults.baseURL = "http://localhost:8080/api";
+// axios.defaults.baseURL = "http://192.168.0.174:8080/api";
 
 const rootStore = new RootStore();
 

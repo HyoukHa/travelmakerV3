@@ -21,4 +21,5 @@ public class OutNotice {
     private Calendar written_date;
     private Calendar updated_date;
     private Integer viewCount;
+    private String nickname;
 }
