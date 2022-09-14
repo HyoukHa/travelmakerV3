@@ -9,22 +9,13 @@ import Paper from "@mui/material/Paper";
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { setSession } from "../../config/session/session";
 
-const EnventNoti = () => {
+const EventList = ({ eventPage, setEventPage = () => {} }) => {
   const category = 1;
-  const [notiDatas, setNotiData] = useState([]);
+  const [eventDatas, setEventData] = useState([]);
   const navigate = useNavigate();
 
-  const noticeBoardHandler = () => {
-    navigate("/board/announcement/noticeboard/:id");
-  };
-
-  const date = new Date();
-  const year = String(date.getFullYear());
-  const month = String(date.getMonth());
-  const day = String(date.getDay());
-  const updatedDay = `${year}/${month}/${day}`;
-  const writtenDay = `${year}/${month}/${day}`;
   useEffect(() => {
     axios
       .post("/eventboard", category, {
@@ -33,8 +24,8 @@ const EnventNoti = () => {
         },
       })
       .then((res) => {
-        setNotiData(res.data);
-        console.log(res.data);
+        setEventData(res.data);
+        setSession("eventBoard", JSON.stringify(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -66,31 +57,42 @@ const EnventNoti = () => {
         </TableHead>
 
         <TableBody>
-          {notiDatas.map((notiData, index) => (
-            <TableRow key={index} step={notiData} onClick={noticeBoardHandler}>
+          {eventDatas.map((eventData, index) => (
+            <TableRow
+              key={index}
+              step={eventData}
+              onClick={() => {
+                setEventPage({
+                  ...eventPage,
+                  detail: true,
+                  boardId: eventData.id,
+                  pageNum: eventDatas.length - index,
+                });
+              }}
+            >
               <TableCell />
               <TableCell width="100px" align="left">
                 {index + 1}
                 {/**글번호 */}
               </TableCell>
               <TableCell width="800px">
-                {notiData.title}
+                {eventData.title}
                 {/**제목 */}
               </TableCell>
               <TableCell width="200px" align="right">
-                {notiData.nickname}
+                {eventData.nickname}
                 {/**작성자 */}
               </TableCell>
               <TableCell width="200px" align="right">
-                {notiData.written_date}
+                {eventData.written_date}
                 {/**최초 작성일 */}
               </TableCell>
               <TableCell width="200px" align="right">
-                {notiData.updated_date}
+                {eventData.updated_date}
                 {/**수정일 */}
               </TableCell>
               <TableCell width="100px" align="right">
-                {notiData.viewCount}
+                {eventData.viewCount}
                 {/**조회수 */}
               </TableCell>
             </TableRow>
@@ -101,4 +103,4 @@ const EnventNoti = () => {
   );
 };
 
-export default EnventNoti;
+export default EventList;
