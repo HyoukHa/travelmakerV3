@@ -17,7 +17,6 @@ import { css } from "@emotion/react";
 import Profile from "../Profile";
 import DropDown from "../dropdown/DropDown";
 import MainLogo from "../MainLogo";
-import Ogu1 from "../../static/ogu1.png";
 import { SignIn } from "../../../container";
 import { useNavigate } from "react-router";
 import { getSession } from "../../../config/session/session";

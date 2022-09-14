@@ -11,17 +11,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { setSession } from "../../config/session/session";
 
-const NotiList = () => {
+const NotiList = ({ detailPage, setDetailPage = () => {} }) => {
   const category = 1;
   const [notiDatas, setNotiData] = useState([]);
   const navigate = useNavigate();
 
-  const date = new Date();
-  const year = String(date.getFullYear());
-  const month = String(date.getMonth());
-  const day = String(date.getDay());
-  const updatedDay = `${year}/${month}/${day}`;
-  const writtenDay = `${year}/${month}/${day}`;
   useEffect(() => {
     axios
       .post("/noticeboard", category, {
@@ -32,7 +26,6 @@ const NotiList = () => {
       .then((res) => {
         setNotiData(res.data);
         setSession("noticeBoard", JSON.stringify(res.data));
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -69,7 +62,12 @@ const NotiList = () => {
               key={index}
               step={notiData}
               onClick={() => {
-                navigate("/board/announcement/notice/" + notiData.id);
+                setDetailPage({
+                  ...detailPage,
+                  detail: true,
+                  boardId: notiData.id,
+                  pageNum: notiDatas.length - index,
+                });
               }}
             >
               <TableCell />
