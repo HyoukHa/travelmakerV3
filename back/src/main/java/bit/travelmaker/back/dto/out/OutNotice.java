@@ -26,6 +26,7 @@ public class OutNotice {
     private Date updated_date;
     private Integer viewCount;
     private String nickname;
+    private String imgs;
 
     public HashMap<String, Object> convertToHashmap() {
         HashMap<String, Object> response = new HashMap<>();
@@ -39,6 +40,7 @@ public class OutNotice {
         response.put("updated_date",sdf.format(updated_date));
         response.put("viewCount",viewCount);
         response.put("nickname",nickname);
+        response.put("imgs",imgs);
 
         return response;
     }

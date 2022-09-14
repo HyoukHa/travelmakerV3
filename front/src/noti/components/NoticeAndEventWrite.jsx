@@ -3,7 +3,6 @@ import {
   Button,
   FormControl,
   Grid,
-  InputAdornment,
   InputLabel,
   MenuItem,
   OutlinedInput,
@@ -111,7 +110,7 @@ const NoticeAndEventWrite = () => {
               />
             </FormControl>
           </Grid>
-          <Grid>
+          <Grid sx={{ marginTop: "10px" }}>
             <TextField
               sx={{ width: "1150px" }}
               id="content"

@@ -16,7 +16,9 @@ const NoticeDetail = ({ detailPage, setDetailPage = () => {} }) => {
   // 다음글
   const [nextNotice, setnextNotice] = useState([]);
 
-  const noticeUpdateHandler = () => {};
+  const noticeUpdateHandler = () => {
+    navigate("/board/announcement/update/" + noticeDetail.id + "/notice");
+  };
 
   const deleteHandler = () => {
     axios

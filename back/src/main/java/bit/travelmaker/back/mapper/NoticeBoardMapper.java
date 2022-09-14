@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface NoticeBoardMapper {
     List<OutNotice> noticeBoardList(int category);
-    List<OutNotice> noticeBoardUpdate(int id);
+    void noticeBoardUpdate( OutNotice outNotice);
     List<OutNotice> eventBoardList(int category);
     void insert(InNotice inNotice);
     void noticeBoardCount(int id, int viewCount);

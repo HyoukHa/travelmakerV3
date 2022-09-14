@@ -72,7 +72,7 @@ const EventList = ({ eventPage, setEventPage = () => {} }) => {
             >
               <TableCell />
               <TableCell width="100px" align="left">
-                {index + 1}
+                {eventDatas.length - index}
                 {/**글번호 */}
               </TableCell>
               <TableCell width="800px">

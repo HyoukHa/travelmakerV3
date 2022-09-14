@@ -23,8 +23,8 @@ public class NoticeBoardService {
     public List<OutNotice> noticeBoardList(int category){
         return noticeBoardMapper.noticeBoardList(category);
     }
-    public List<OutNotice> noticeBoardUpdate(int id){
-        return noticeBoardMapper.noticeBoardUpdate(id);
+    public void noticeBoardUpdate( OutNotice outNotice){
+         noticeBoardMapper.noticeBoardUpdate(outNotice);
     }
 
     public List<OutNotice> eventBoardList(int category){

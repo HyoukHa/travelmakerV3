@@ -48,7 +48,7 @@ public class NoticeBoardController {
     public ResponseEntity<?> eventBoardList(@RequestBody final int category){
         HashMap<String, Object> response = new HashMap<>();
 
-        List<OutNotice> outNotices = noticeBoardService.noticeBoardList(category);
+        List<OutNotice> outNotices = noticeBoardService.eventBoardList(category);
 
         List<HashMap<String, Object>> event = new ArrayList<>();
 
@@ -66,6 +66,19 @@ public class NoticeBoardController {
         noticeBoardService.insert(inNotice);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/noticeandevent/update/{id}")
+    public ResponseEntity<?>update(@PathVariable final int id, @RequestBody final OutNotice outNotice){
+
+        HttpStatus status = HttpStatus.OK;
+        System.out.println(outNotice.getId());
+        if(id == outNotice.getId()) {
+            noticeBoardService.noticeBoardUpdate(outNotice);
+        }else {
+            status = HttpStatus.CONFLICT;
+        }
+        return new ResponseEntity<>(status);
     }
 
     @PostMapping(value = "/noticeandevent/delete")

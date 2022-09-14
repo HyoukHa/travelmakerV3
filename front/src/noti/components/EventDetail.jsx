@@ -14,7 +14,7 @@ const EventDetail = ({ eventPage, setEventPage = () => {} }) => {
   const [nextEvent, setNextEvent] = useState([]);
 
   const eventUpdateHandler = () => {
-    navigate();
+    navigate("/board/announcement/update/" + eventDetail.id + "/event");
   };
   const deleteHandler = () => {
     axios

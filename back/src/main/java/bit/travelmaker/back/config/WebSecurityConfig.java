@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                                 .antMatchers("/api/noticeboard","/api/noticeboard/**").permitAll()
                                 .antMatchers("/api/eventboard","/api/eventboard/**").permitAll()
                                 .antMatchers("/api/noticeandevent/**").permitAll()
-                                .antMatchers("/api/noticeandevent/insert","/api/noticeandevent/delete").hasAnyRole("ADMIN")
+                                .antMatchers("/api/noticeandevent/insert","/api/noticeandevent/delete","/api/noticeandevent/update/**").hasAnyRole("ADMIN")
                                 .antMatchers("/api/user/update").hasAnyRole("USER", "PACKAGER", "ADMIN")
                                 .antMatchers("/api/user/check/username", "/api/user/check/nickname", "/api/mail/check/email").permitAll()
                                 .antMatchers("/api/user/check/pw", "/api/user/update/check/nickname").hasAnyRole("USER", "PACKAGER", "ADMIN")
