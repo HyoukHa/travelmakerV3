@@ -296,19 +296,19 @@ const WriteBoard = () => {
                 />
                 {/* 사진 */}
                 {/*===== 사용할거니까 지우지 말아주세요===================================================== */}
-                {/* <Button variant="contained" component="label">
-                   파일 첨부
-                   <input
-                     type="file"
-                     accept="image/*"
-                     name="imgfile"
-                     required="이미지 파일이 아닙니다."
-                     pattern="/(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/"
-                     multiple="multiple"
-                     hidden
-                     onChange={handleImgUpload}
-                   />
-                 </Button> */}
+                <Button variant="contained" component="label">
+                  파일 첨부
+                  <input
+                    type="file"
+                    accept="image/*"
+                    name="imgfile"
+                    required="이미지 파일이 아닙니다."
+                    pattern="/(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/"
+                    multiple="multiple"
+                    hidden
+                    onChange={handleImgUpload}
+                  />
+                </Button>
                 {/*===== 사용할거니까 지우지 말아주세요===================================================== */}
                 <ImageList cols={8} sx={{ bgcolor: "black" }}>
                   {imgSrc.map((item, index) => (
@@ -324,7 +324,10 @@ const WriteBoard = () => {
                         }
                       />
                       {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                      <img src={item} style={{ objectFit: "contain" }} />
+                      <img
+                        src={item}
+                        style={{ objectFit: "contain", marginTop: "10px" }}
+                      />
                     </ImageListItem>
                   ))}
                 </ImageList>
