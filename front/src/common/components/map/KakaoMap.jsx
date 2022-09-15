@@ -17,14 +17,30 @@ const KakaoMap = ({
   select,
   Duration,
   setDuration,
+  isDetail,
+  board,
+  maxstep,
 }) => {
+  //========================axois==================
+  // useEffect(() => {
+  //   console.log(board.location);
+  // }, [board]);
+
+  // const [da, setDa] = useState(0);
+  useEffect(() => {
+    console.log("1");
+    console.log(board);
+    if (board != undefined) {
+      console.log(board[0]);
+      console.log(board[1]);
+    }
+  }, [board]);
   //===================button control===================
   const [btnHandler, setBtnHandler] = React.useState(true);
   const btnClick = (e) => {
     setBtnHandler(false);
   };
   //=======================================================
-
   const script = document.createElement("script");
   script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${APP_KEY}&libraries=services,clusterer,drawing&autoload=false`;
   document.head.appendChild(script);
@@ -64,7 +80,17 @@ const KakaoMap = ({
         // var geocoder = new kakao.maps.services.Geocoder();
         // 카테고리로 검색
         var ps = new kakao.maps.services.Places();
-
+        //========================detail===================================
+        //   var marker = new kakao.maps.Marker({
+        //     map: map, // 마커를 표시할 지도
+        //     title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        // });
+        //=======================pickmarker=================================
+        // var marker = new kakao.maps.Marker({
+        //   position: new kakao.maps.LatLng(),
+        // });
+        //==========================================================
+        // isDetail ? (
         if (address === undefined) {
           console.log("ddd");
         } else {
@@ -107,40 +133,45 @@ const KakaoMap = ({
             }
           });
         }
+        //=======================write=================================
       });
     };
     // container or address의 변동점이 있을때 rendering
-  }, [container, address]);
+  }, [container, address, board]);
   return (
     <Container>
-      <div>
-        {/* number로만 받고 onchage로 기간을 받음. 최소 숫자는 1 */}
-        <input
-          type={"number"}
-          onChange={Send_MAXDURATION}
-          placeholder={"기간 입력"}
-          min={"1"}
-          disabled={!btnHandler}
-        />
-        {/* <TextField style={{ MozAppearance: "none" }} label="기간 입력" onChange={Send_MAXDURATION} type={"number"} /> */}
-        {/* 등록 버튼을 누르면 onclick ev로 안의 값이 음수인지 글자인지 확인 후 옳바른 값이면 
+      {isDetail ? (
+        <div>
+          {/* number로만 받고 onchage로 기간을 받음. 최소 숫자는 1 */}
+          <input
+            type={"number"}
+            onChange={Send_MAXDURATION}
+            placeholder={"기간 입력"}
+            min={"1"}
+            disabled={!btnHandler}
+          />
+          {/* <TextField style={{ MozAppearance: "none" }} label="기간 입력" onChange={Send_MAXDURATION} type={"number"} /> */}
+          {/* 등록 버튼을 누르면 onclick ev로 안의 값이 음수인지 글자인지 확인 후 옳바른 값이면 
         다음 태그를 띄어줌 */}
-        <button
-          // onClick={ }
-          type="button"
-          onClick={btnClick}
-        >
-          등록
-        </button>
-        <br />
-        키워드 :{" "}
-        <input type="text" id="keyword" size="15" onChange={SearchKeyword} />
-        <button type="button" onClick={SendKeyword}>
-          검색하기
-        </button>
-      </div>
+          <button
+            // onClick={ }
+            type="button"
+            onClick={btnClick}
+          >
+            등록
+          </button>
+          <br />
+          키워드 :{" "}
+          <input type="text" id="keyword" size="15" onChange={SearchKeyword} />
+          <button type="button" onClick={SendKeyword}>
+            검색하기
+          </button>
+        </div>
+      ) : null}
       <div id="map" style={{ width: "100%", height: "400px" }}></div>
-      <MapList kakaoMap={kakaoMap} select={select} setSelect={setSelect} />
+      {isDetail ? (
+        <MapList kakaoMap={kakaoMap} select={select} setSelect={setSelect} />
+      ) : null}
     </Container>
   );
 };

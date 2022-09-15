@@ -11,7 +11,7 @@ const PackageBoard = () => {
   const { id } = useParams();
 
   return (
-    <Container container spacing={2} item={12}>
+    <Container container={true} spacing={2} item={12}>
       <Box sx={{ alignItems: "center" }}>
         <Package id={id} />
         <LinkButton
