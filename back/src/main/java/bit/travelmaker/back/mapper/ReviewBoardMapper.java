@@ -1,7 +1,19 @@
 package bit.travelmaker.back.mapper;
 
+import bit.travelmaker.back.dto.out.OutPackageCard;
+import bit.travelmaker.back.dto.out.OutReviewCard;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Mapper
-public class ReviewBoardMapper {
+public interface ReviewBoardMapper {
+    HashMap<String, Object> getDetailReview(Integer reviewId);
+
+    void viewCounter(HashMap<String, Object> req);
+
+    List<OutReviewCard> getReviewList(int pageNum);
+
+    Integer reviewCounter();
 }

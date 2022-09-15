@@ -17,7 +17,7 @@ import { Reply } from ".";
 import { css } from "@emotion/react";
 import { getSession } from "../config/session/session";
 
-export const PackageBoardDetail = (props) => {
+export const PackageBoardDetail = ({ userId }) => {
   const [board, setBoard] = useState({});
   const [isJoin, setIsJoin] = useState(false);
   const [mapstep, setMapstep] = useState(0);
@@ -132,6 +132,7 @@ export const PackageBoardDetail = (props) => {
             ) : null}
           </Typography>
           <Divider />
+
           <Container>
             <select name="steps">
               {Object.keys(board).length != 0
@@ -152,16 +153,11 @@ export const PackageBoardDetail = (props) => {
                   })
                 : null}
             </select>
-            <KakaoMap
-              isDetail={isDetail}
-              board={board.location}
-              maxstep={maxstep}
-            />
           </Container>
           <Container>
             <Typography>{board.content}</Typography>
           </Container>
-          {props.userId === board.userId ? (
+          {userId === board.userId ? (
             <Box display="flex" justifyContent="center" justifyItems="center">
               <Button>수정</Button>
               <Button>삭제</Button>

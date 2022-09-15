@@ -2,4 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="bit.travelmaker.back.mapper.ReviewBoardMapper">
+    <select id="getDetailReview" parameterType="int" resultType="HashMap">
+        select r.id as id,
+               b.userId as userId,
+               b.title as title,
+               b.content as content,
+               b.imgs as imgs,
+               b.written_date as written_date,
+               b.viewCount as viewCount,
+               u.nickname as nickname,
+               r.packageBoardId as packageBoardId,
+               p.limit_to as limit_to,
+               p.duration as duration,
+               p.budget as budget,
+               p.location as location,
+               p.start_date as start_date
+        from reviewboard as r
+                 inner join board as b on r.id = b.id
+                 inner join user as u on b.userId = u.id
+                 inner join packageboard as p on r.packageBoardId = p.id
+        where r.id = #{reviewId};
+    </select>
+
+    <select id="getReviewList" parameterType="int" resultType="OutReviewCard">
+        select r.id as id,
+            r.packageBoardId as packageBoardId,
+            b.userId as userId,
+            b.title as title,
+            b.content as content,
+            b.imgs as contentImg,
+            b.written_date,
+            u.src_photo as userImg
+        from `reviewboard` as r
+            inner join `board` as b on r.id = b.id
+            inner join `user` as u on b.userId = u.id
+        order by b.id desc
+            limit #{pageNum} , 8;
+    </select>
+
+    <update id="viewCounter">
+        update board set viewcount = #{viewCount} where id = #{id};
+    </update>
+
+    <select id="reviewCounter" resultType="int">
+        select count(id) from reviewboard;
+    </select>
 </mapper>

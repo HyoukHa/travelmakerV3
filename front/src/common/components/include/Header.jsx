@@ -24,7 +24,7 @@ import { getSession } from "../../../config/session/session";
 const navList = {
   게시판: [
     { title: "패키지", link: "/board/package/1" },
-    { title: "Menu1-2", link: "/link1-2" },
+    { title: "후기", link: "/board/review/1" },
   ],
   Menu3: [
     { title: "Menu3-1", link: "/link3-1" },

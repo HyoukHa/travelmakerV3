@@ -20,7 +20,7 @@ public interface PackageBoardMapper {
 
     void undoJoinPackage(int id);
 
-    List<OutPackageCard> PKCardPusher(int pageNum);
+    List<OutPackageCard> getPackageList(int pageNum);
 
     List<OutPackageCard> myPKCardPusher(int userId);
 

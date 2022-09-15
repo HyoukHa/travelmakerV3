@@ -38,16 +38,25 @@
         select id from joinpackage where userId = #{userId} and packageId = #{packageId};
     </select>
 
-    <select id="viewCounter">
+    <update id="viewCounter">
         update board set viewcount = #{viewCount} where id = #{id};
-    </select>
+    </update>
 
-    <select id="PKCardPusher" parameterType="int" resultType="OutPackageCard">
-        select b.id, b.userId, b.title, b.imgs as contentImg, b.written_date, u.src_photo as userImg, p.budget, p.duration, p.limit_to, p.current_to from `board` as b
-                inner join `user` as u on b.userId = u.id
-                inner join `packageboard` as p on b.id = p.id
-                order by b.id desc
-                limit #{pageNum} , 8;
+    <select id="getPackageList" parameterType="int" resultType="OutPackageCard">
+        select b.id,
+               b.userId,
+               b.title,
+               b.imgs as contentImg,
+               b.written_date,
+               u.src_photo as userImg,
+               p.budget,
+               p.duration,
+               p.limit_to,
+               p.current_to
+        from `packageboard` as p
+            inner join `board` as b on p.id = b.id
+            inner join `user` as u on b.userId = u.id
+        order by b.id desc limit #{pageNum} , 8;
     </select>
 
     <select id="myPKCardPusher" parameterType="int" resultType="OutPackageCard">
