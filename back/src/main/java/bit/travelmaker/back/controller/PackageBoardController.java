@@ -40,7 +40,7 @@ public class PackageBoardController {
     public ResponseEntity<?> getPackageCardList(@PathVariable int pageNum){
         HashMap<String, Object> response = new HashMap<>();
 
-        List<OutPackageCard> packageData = packageBoardService.PKCardPush(pageNum);
+        List<OutPackageCard> packageData = packageBoardService.getPackageList(pageNum);
         int count = packageBoardService.packageCount();
 
         List<HashMap<String, Object>> packages = new ArrayList<>();

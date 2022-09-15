@@ -2,12 +2,15 @@ import { Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { PaginationBtn } from "../common";
 import PackageCard from "../package/components/element/PackageCard";
-import PackageBoard from "../user/service/packageBoard/Package.service";
+import {
+  PackageBoard,
+  ReviewBoard,
+} from "../user/service/boardList/cardList.service";
 import { Box } from "@mui/material";
 import { getSession } from "../config/session/session";
 import axios from "axios";
 
-function Package({ id }) {
+function Package({ id, page }) {
   const [images, setImages] = React.useState([]);
   const [count, setCount] = React.useState();
   const [isWished, setIsWished] = useState([]);
@@ -23,29 +26,39 @@ function Package({ id }) {
   //==========================================================
   useEffect(() => {
     let abc;
-    PackageBoard({ id: id }).then((res) => {
-      setCount(Number(res.data.count));
-      setImages(res.data.packageData);
+    page === "package"
+      ? PackageBoard({ id: id }).then((res) => {
+          setCount(Number(res.data.count));
+          setImages(res.data.packageData);
+          console.log(res.data);
 
-      if (getSession("userInfo") !== null) {
-        abc = res.data.packageData.map((map) => {
-          return map.id;
-        });
+          if (getSession("userInfo") !== null) {
+            abc = res.data.packageData.map((map) => {
+              return map.id;
+            });
 
-        axios({
-          url: "/packageboard/iswish",
-          method: "post",
-          data: abc,
-          headers: { Authorization: getSession("Authorization") },
+            axios({
+              url: "/packageboard/iswish",
+              method: "post",
+              data: abc,
+              headers: { Authorization: getSession("Authorization") },
+            })
+              .then((resp) => {
+                setIsWished(resp.data);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
         })
-          .then((resp) => {
-            setIsWished(resp.data);
+      : ReviewBoard({ id: id })
+          .then((res) => {
+            setCount(Number(res.data.count));
+            setImages(res.data.reviewData);
           })
           .catch((error) => {
             console.log(error);
           });
-      }
-    });
   }, [pageid]);
 
   // useEffect(() => {

@@ -23,7 +23,10 @@ public class FollowController {
     @PostMapping(value = "/follow")
     public ResponseEntity<?> follow(@AuthenticationPrincipal int userId, @RequestBody JSONObject obj) {
         HttpStatus status = HttpStatus.OK;
-        Follow follow = Follow.builder().likeUserId(userId).likedUserId(Integer.valueOf(obj.get("id").toString())).build();
+        Follow follow = Follow.builder()
+                .likeUserId(userId)
+                .likedUserId(Integer.valueOf(obj.get("id").toString()))
+                .build();
 
         Boolean success = followService.follow(follow);
 

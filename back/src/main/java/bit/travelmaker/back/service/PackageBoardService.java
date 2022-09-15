@@ -79,8 +79,8 @@ public class PackageBoardService {
     }
 
 
-    public List<OutPackageCard> PKCardPush(final Integer pageNum) {
-        return packageBoardMapper.PKCardPusher((pageNum-1) * 8);
+    public List<OutPackageCard> getPackageList(final Integer pageNum) {
+        return packageBoardMapper.getPackageList((pageNum-1) * 8);
     }
 
     public Integer packageCount(){

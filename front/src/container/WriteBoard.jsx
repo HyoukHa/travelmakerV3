@@ -122,6 +122,7 @@ const WriteBoard = () => {
   };
 
   const sendData = (e) => {
+    e.preventDefault();
     // console.log("flag1");
 
     const scheduleData = schedule.map((item) => {
@@ -158,9 +159,9 @@ const WriteBoard = () => {
       headers: { Authorization: getSession("Authorization") },
     })
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         navigate("/board/package/1");
-        // return false;
+        return false;
       })
       .catch((error) => {
         console.log(error);

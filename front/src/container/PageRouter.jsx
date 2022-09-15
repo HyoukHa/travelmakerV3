@@ -40,8 +40,16 @@ const PageRouter = () => {
             path={`/board/package/detail/:boardId`}
             element={<PackageBoardDetail />}
           />
-          <Route exact path="/board/package/:id" element={<PackageBoard />} />
-          <Route exact path="/board/review" element={<ReviewBoard />} />
+          <Route
+            exact
+            path="/board/package/:pagenum"
+            element={<PackageBoard />}
+          />
+          <Route
+            exact
+            path="/board/review/:pagenum"
+            element={<ReviewBoard />}
+          />
           <Route
             exact
             path="/board/announcement/writed"

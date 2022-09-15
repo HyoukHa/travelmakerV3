@@ -17,7 +17,7 @@ import { Reply } from ".";
 import { css } from "@emotion/react";
 import { getSession } from "../config/session/session";
 
-export const PackageBoardDetail = (props) => {
+export const PackageBoardDetail = ({ userId }) => {
   const [board, setBoard] = useState({});
   const [isJoin, setIsJoin] = useState(false);
   const [mapstep, setMapstep] = useState(0);
@@ -141,6 +141,7 @@ export const PackageBoardDetail = (props) => {
             ) : null}
           </Typography>
           <Divider />
+
           <Container>
             <select name="steps" onChange={daychange} defaultValue={0}>
               {Object.keys(board).length != 0
@@ -171,7 +172,7 @@ export const PackageBoardDetail = (props) => {
           <Container>
             <Typography>{board.content}</Typography>
           </Container>
-          {props.userId === board.userId ? (
+          {userId === board.userId ? (
             <Box display="flex" justifyContent="center" justifyItems="center">
               <Button>수정</Button>
               <Button>삭제</Button>

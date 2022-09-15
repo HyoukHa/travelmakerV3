@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { getSession } from "../../../config/session/session";
 
-const PackageBoard = ({ id }) => {
+export const PackageBoard = ({ id }) => {
   return axios({
     url: `/packageboard/${id}`,
     method: "get",
@@ -12,4 +12,12 @@ const PackageBoard = ({ id }) => {
   });
 };
 
-export default PackageBoard;
+export const ReviewBoard = ({ id }) => {
+  return axios({
+    url: `/reviewboard/${id}`,
+    method: "get",
+    headers: {
+      Authorization: getSession("Authorization"),
+    },
+  });
+};

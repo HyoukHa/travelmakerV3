@@ -45,6 +45,8 @@ public class WebSecurityConfig {
                                 .antMatchers("/api/packageboard/write", "/api/packageboard/wish", "/api/packageboard/iswish").hasAnyRole("USER", "PACKAGER", "ADMIN")
                                 .antMatchers("/api/packageboard/join", "/api/packageboard/isjoin").hasAnyRole("USER", "PACKAGER", "ADMIN")
                                 .antMatchers("/api/packageboard/**").permitAll()
+                                .antMatchers("/api/reviewboard/write").authenticated()
+                                .antMatchers("/api/reviewboard/**").permitAll()
                                 .antMatchers("/api/reply/**").permitAll()
                                 .antMatchers("/api/search").permitAll()
                                 .antMatchers("/").permitAll()
