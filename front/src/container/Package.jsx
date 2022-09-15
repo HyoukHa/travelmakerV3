@@ -93,9 +93,9 @@ function Package({ id, page }) {
       >
         {images.map((step, index) =>
           isWished.includes(step.id) ? (
-            <PackageCard key={index} step={step} wish={true} />
+            <PackageCard key={index} step={step} wish={true} page={page} />
           ) : (
-            <PackageCard key={index} step={step} wish={false} />
+            <PackageCard key={index} step={step} wish={false} page={page} />
           )
         )}
       </Box>
