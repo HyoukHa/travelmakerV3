@@ -1,4 +1,4 @@
 package bit.travelmaker.back.mapper;
 
-public class ReviewBoardMapper {
+public interface ReviewBoardMapper {
 }

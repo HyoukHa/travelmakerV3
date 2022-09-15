@@ -19,35 +19,16 @@ const UserFollowList = ({ name }) => {
   const [userLists, setUserLists] = useState([]);
 
   useEffect(() => {
-    console.log(getSession("Authorization"));
-    console.log(name);
-    if (name === "myFollower") {
-      // 본인
+    if (name == "follower") {
+      // follower
       axios
         .get(`/follower/${id}`)
         .then((res) => {
-          console.log(res.data);
           setUserLists(res.data);
         })
         .catch();
-    } else if (name === "myFollowing") {
-      // 본인
-      axios
-        .get(`/following/${id}`)
-        .then((res) => {
-          setUserLists(res.data);
-        })
-        .catch(() => {});
-    } else if (name === "userFollwer") {
-      // 다른사람
-      axios
-        .get(`/follower/${id}`)
-        .then((res) => {
-          setUserLists(res.data);
-        })
-        .catch(() => {});
-    } else if (name === "userFollowing") {
-      // 다른사람
+    } else if (name == "following") {
+      // following
       axios
         .get(`/following/${id}`)
         .then((res) => {

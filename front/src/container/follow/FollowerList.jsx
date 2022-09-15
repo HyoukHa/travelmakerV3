@@ -5,15 +5,9 @@ import { getSession } from "../../config/session/session";
 import UserFollowList from "./UserFollowList";
 
 const FollowerList = () => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState("follower");
   const { id } = useParams();
-  useEffect(() => {
-    if (JSON.parse(getSession("userInfo")).id == id) {
-      setName("myFollower");
-    } else {
-      setName("userFollower");
-    }
-  }, [name]);
+  useEffect(() => {}, [name]);
 
   return (
     <Box>

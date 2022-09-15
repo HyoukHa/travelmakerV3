@@ -5,17 +5,47 @@ import {
   Grid,
   InputLabel,
   MenuItem,
+  Modal,
   OutlinedInput,
   Select,
   TextField,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getSession } from "../../config/session/session";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  right: "auto",
+  bottom: "auto",
+  marginRight: "-50%",
+  transform: "translate(-50%, -50%)",
+  width: "auto",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  overlay: {
+    backgroundColor: "rgba(49,92,38,0.7)",
+  },
+  inputOutfontDanger: {
+    paddingLeft: "10px",
+    color: " red",
+  },
+};
 
 const NoticeAndEventWrite = () => {
+  const regex = /^[0-9~!@#$%";'^,&*()_+|</>=>`?:{[\}/^\s+|\s+$]/;
+
+  const [open, setOpen] = useState(false);
+  // 경고 창 닫기
+  const closeModal = () => {
+    setOpen(false);
+  };
   const navigate = useNavigate();
   const currencies = [
     { value: "[공지사항]", label: "공지사항" },
@@ -37,20 +67,25 @@ const NoticeAndEventWrite = () => {
     userId: JSON.parse(getSession("userInfo")).id,
     imgs: "",
   });
-
   const titleCandleChange = (e) => {
     setTitle(e.target.value);
   };
   const titleHandleChange = (info) => (e) => {
     setNoticeOrEvent({ ...noticeOrEvent, [info]: e.target.value });
-    setLastNoticeOrEvent({
-      ...lastNoticeOrEvent,
-      title: title + noticeOrEvent.title,
-      content: noticeOrEvent.content,
-      imgs: noticeOrEvent.imgs,
-    });
-    console.log(lastNoticeOrEvent);
   };
+  useEffect(() => {
+    if (!regex.test(noticeOrEvent.title)) {
+      setLastNoticeOrEvent({
+        ...lastNoticeOrEvent,
+        title: title + noticeOrEvent.title,
+        content: noticeOrEvent.content,
+        imgs: noticeOrEvent.imgs,
+      });
+    } else {
+      setOpen(true);
+    }
+  }, [noticeOrEvent]);
+  useEffect(() => {}, [lastNoticeOrEvent]);
   const onSubitHandler = () => {
     axios
       .post("/noticeandevent/insert", lastNoticeOrEvent, {
@@ -140,6 +175,34 @@ const NoticeAndEventWrite = () => {
           </Grid>
         </Grid>
       </Box>
+      <Modal
+        open={open}
+        onClose={closeModal}
+        //  이것은 모달 창을 만들때 외부를 클릭하면 꺼지도록 해주는 기능입니다.
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography
+            component="h4"
+            variant="h5"
+            style={{ textAlign: "center", color: "red" }}
+          >
+            <p>공지사항과 이벤트를 선택해주세요.</p>
+            <p>제목과 내용을 입력해주세요.</p>
+            <p>제목 앞에 숫자 혹은 특수 문자가 올 수 없습니다.</p>
+          </Typography>
+          <Grid item xs style={{ textAlign: "center" }}>
+            <Button
+              variant="contained"
+              style={{ marginTop: "10px" }}
+              onClick={closeModal}
+            >
+              확인
+            </Button>
+          </Grid>
+        </Box>
+      </Modal>
     </div>
   );
 };

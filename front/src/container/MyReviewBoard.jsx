@@ -27,6 +27,7 @@ const MyReviewBoard = () => {
       justifyContent="center"
       alignItems="center"
       minHeight="10vh"
+      style={{ marginTop: "20px" }}
     >
       <Grid item>
         <Box

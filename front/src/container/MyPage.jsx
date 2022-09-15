@@ -11,6 +11,7 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import DeleteIcon from "@mui/icons-material/Delete";
 /** @jsxImportSource @emotion/react */
 import {
   Avatar,
@@ -36,6 +37,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { getSession } from "../config/session/session";
 import MyPackageBoard from "./MyPackageBoard";
 import MyReviewBoard from "./MyReviewBoard";
+import { render } from "react-dom";
 
 const style = {
   position: "absolute",
@@ -64,6 +66,10 @@ const MyPage = () => {
   // 유저 정보 불러와 담을 객체
   const [mine, setMine] = useState(false);
   const { id } = useParams();
+  const [userLists, setUserLists] = useState([{}]);
+
+  const [isFollow, setIsFollow] = useState(false);
+
   const [userInfo, setUserInfo] = useState({
     nickname: "",
     follower: "",
@@ -71,6 +77,7 @@ const MyPage = () => {
     src_photo: "",
     rank: "",
   });
+  useEffect(() => {}, [isFollow, userInfo]);
 
   // 사용자의 정보를 불러올때 저장된 토큰값을 같이 보내준다.
   useEffect(() => {
@@ -80,7 +87,6 @@ const MyPage = () => {
           headers: { Authorization: getSession("Authorization") },
         })
         .then((res) => {
-          console.log(res.data);
           if (res.data.id == id) {
             setMine(true);
           } else {
@@ -97,9 +103,26 @@ const MyPage = () => {
             setUserInfo(res.data);
           })
           .catch();
+        //
+        axios
+          .get(`/follower/${id}`)
+          .then((res) => {
+            setUserLists(res.data);
+          })
+          .catch();
+
+        //
       }
     }
-  }, []);
+  }, [isFollow]);
+  useEffect(() => {
+    let i;
+    for (i = 0; i < userLists.length; i++) {
+      if (userLists[i].targetUserId == JSON.parse(getSession("userInfo")).id) {
+        setIsFollow(true);
+      }
+    }
+  }, [userLists]);
 
   const [passwordChecked, setPasswordChecked] = useState({
     password: "",
@@ -147,6 +170,20 @@ const MyPage = () => {
 
   const handleMouseDownPassword = (e) => {
     e.preventDefault();
+  };
+
+  const followHandler = () => {
+    axios
+      .post(
+        "/follow",
+        { id: id },
+        { headers: { Authorization: getSession("Authorization") } }
+      )
+      .then((res) => {
+        console.log(res.status);
+        setIsFollow(res.data);
+      })
+      .catch();
   };
 
   return (
@@ -237,10 +274,37 @@ const MyPage = () => {
               </CardContent>
             </CardActionArea>
           </Card>
+          {id != JSON.parse(getSession("userInfo")).id ? (
+            <Box marginTop="8px">
+              {userInfo.follower === "" || isFollow ? (
+                <Button
+                  onClick={followHandler}
+                  variant="contained"
+                  style={{ fontSize: "30px" }}
+                >
+                  💔
+                </Button>
+              ) : (
+                <Button
+                  onClick={followHandler}
+                  variant="contained"
+                  style={{ fontSize: "30px" }}
+                >
+                  💗
+                </Button>
+              )}
+            </Box>
+          ) : null}
         </Box>
       </Box>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="10vh"
+      ></Box>
       {/** 내가 작성한 판매 품목 불러오기 */}
-      {userInfo.rank === 2 ? <MyPackageBoard /> : null}
+      <MyPackageBoard />
 
       {/** 내가 작성한 리뷰 불러오기 */}
 

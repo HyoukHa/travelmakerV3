@@ -40,8 +40,10 @@ const style = {
 };
 
 const NoticeAndEventUpdate = () => {
+  const regex = /^[0-9~!@#$%";'^,&*()_+|</>=>`?:{[\}/^\s+|\s+$]/;
+
   const [open, setOpen] = useState(false);
-  // 로그인 창 닫기
+  // 경고 창 닫기
   const closeModal = () => {
     setOpen(false);
   };
@@ -74,19 +76,25 @@ const NoticeAndEventUpdate = () => {
   };
   const titleHandleChange = (info) => (e) => {
     setNoticeOrEvent({ ...noticeOrEvent, [info]: e.target.value });
-    setLastNoticeOrEvent({
-      ...lastNoticeOrEvent,
-      id: noticeOrEvent.id,
-      title: title + noticeOrEvent.title,
-      content: noticeOrEvent.content,
-      imgs: noticeOrEvent.imgs,
-    });
-    console.log(lastNoticeOrEvent);
   };
+  useEffect(() => {
+    if (!regex.test(noticeOrEvent.title)) {
+      setLastNoticeOrEvent({
+        ...lastNoticeOrEvent,
+        id: noticeOrEvent.id,
+        title: title + noticeOrEvent.title,
+        content: noticeOrEvent.content,
+        imgs: noticeOrEvent.imgs,
+      });
+    } else {
+      setOpen(true);
+    }
+  }, [noticeOrEvent]);
+  useEffect(() => {}, [lastNoticeOrEvent]);
 
   useEffect(() => {
     let i;
-    console.log(id, noticeAndEvent);
+
     if (noticeAndEvent == "notice") {
       for (i = 0; i < JSON.parse(getSession("noticeBoard")).length; i++) {
         if (id == JSON.parse(getSession("noticeBoard"))[i].id) {
@@ -143,7 +151,6 @@ const NoticeAndEventUpdate = () => {
       setOpen(true);
     }
   };
-  useEffect(() => {}, [lastNoticeOrEvent]);
 
   return (
     <div
@@ -217,21 +224,22 @@ const NoticeAndEventUpdate = () => {
       </Box>
       <Modal
         open={open}
-        // onClose={handleClose}
+        onClose={closeModal}
         //  이것은 모달 창을 만들때 외부를 클릭하면 꺼지도록 해주는 기능입니다.
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <Typography
-            component="h1"
+            component="h4"
             variant="h5"
-            style={{ textAlign: "center" }}
+            style={{ textAlign: "center", color: "red" }}
           >
-            <h4>공지사항과 이벤트를 선택해주세요.</h4>
-            <h4>제목과 내용을 입력해주세요.</h4>
+            <p>공지사항과 이벤트를 선택해주세요.</p>
+            <p>제목과 내용을 입력해주세요.</p>
+            <p>제목 앞에 숫자 혹은 특수 문자가 올 수 없습니다.</p>
           </Typography>
-          <Grid item xs style={{ paddingLeft: "10%" }}>
+          <Grid item xs style={{ textAlign: "center" }}>
             <Button
               variant="contained"
               style={{ marginTop: "10px" }}

@@ -53,7 +53,10 @@ const Profile = ({ img, setIsLogined }) => {
           <ListItem key={text} disablePadding>
             <ListItemButton
               onClick={() => {
-                navigate(`/user/` + JSON.parse(getSession("userInfo")).id);
+                // navigate(`/user/${JSON.parse(getSession("userInfo")).id}`);
+                window.location.href = `/user/${
+                  JSON.parse(getSession("userInfo")).id
+                }`;
               }}
             >
               <ListItemIcon>

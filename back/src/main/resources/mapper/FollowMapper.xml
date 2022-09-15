@@ -3,10 +3,22 @@
 
 <mapper namespace="bit.travelmaker.back.mapper.FollowMapper">
     <select id="getFollowerList" parameterType="int" resultType="outFollow">
-        select f.id, u.id as targetUserId, u.nickname as targetNickname, u.src_photo as userImg from follow as f inner join user as u on f.likedUserId = u.id where f.likeUserId = #{userId};
+        select f.id,
+               f.likeUserId as targetUserId,
+               u.nickname as targetNickname,
+               u.src_photo as userImg
+        from follow as f
+            inner join user as u on f.likeUserId = u.id
+        where f.likedUserId = #{userId};
     </select>
 
     <select id="getFollowingList" parameterType="int" resultType="outFollow">
-        select f.id, u.id as targetUserId, u.nickname as targetNickname, u.src_photo as userImg from follow as f inner join user as u on f.likeUserId = u.id where f.likedUserId = #{userId}
+        select f.id,
+               f.likedUserId as targetUserId,
+               u.nickname as targetNickname,
+               u.src_photo as userImg
+        from follow as f
+            inner join user as u on f.likedUserId = u.id
+        where f.likeUserId = #{userId}
     </select>
 </mapper>
