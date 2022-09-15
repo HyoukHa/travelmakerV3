@@ -32,6 +32,9 @@ import { getSession } from "../config/session/session";
 const steps = ["경로 설정", "내용 작성"];
 
 const WriteBoard = () => {
+  //========================================
+  const [isDetail, setisDetail] = React.useState(false);
+
   //================mapapi========================
   const [keyword, setKeyword] = React.useState("");
   // map list에서 클릭해서 받아온 값들을 저장하는 select state관리
@@ -53,6 +56,7 @@ const WriteBoard = () => {
   // 날짜 값을 관리하는 value
   const [value, setValue] = React.useState(dayjs("2022-10-26"));
   const handleChange = (newValue) => {
+    console.log(newValue);
     setValue(newValue);
   };
   //===================================================================
@@ -120,6 +124,11 @@ const WriteBoard = () => {
   const sendData = (e) => {
     // console.log("flag1");
 
+    const scheduleData = schedule.map((item) => {
+      return item.map((item2) => {
+        return { x: item2.x, y: item2.y, addressName: item2.address_name };
+      });
+    });
     // 들어가야하는 데이터들
     console.log(
       "data 들이야 : ",
@@ -135,17 +144,21 @@ const WriteBoard = () => {
       data: {
         title: writeData.title,
         content: writeData.content,
-        maxto: writeData.MAXTO,
-        budged: writeData.budged,
-        duration: Duration,
+        limit_to: parseInt(writeData.MAXTO),
+        budget: parseInt(writeData.budged),
+        duration: parseInt(Duration),
         // imgurl: imgSrc,
-        startdate: value.$d,
-        schedule: schedule,
+        // startdate: value.$y + "." + (value.$M + 1) + "." + value.$D,
+        year: value.$y,
+        month: value.$M,
+        day: value.$D,
+        schedule: JSON.stringify(scheduleData),
       },
+      // value.$d
       headers: { Authorization: getSession("Authorization") },
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         navigate("/board/package/1");
         // return false;
       })
@@ -194,6 +207,7 @@ const WriteBoard = () => {
                 }}
               >
                 <KakaoMap
+                  isDetail={!isDetail}
                   select={select}
                   setKeyword={setKeyword}
                   keyword={keyword}
