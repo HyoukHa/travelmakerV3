@@ -23,9 +23,18 @@ export const PackageBoardDetail = (props) => {
   const [mapstep, setMapstep] = useState(0);
   const [isDetail, setisDetail] = useState(false);
   const { boardId } = useParams();
+  const [mapDay, setMapDay] = useState(0);
   console.log("flag1"); //1
   console.log(board); //2
   let maxstep = 0;
+  const daychange = (e) => {
+    setMapDay(e.target.value);
+    console.log("지금 있는곳", e.target.value);
+  };
+  useEffect(() => {
+    console.log("rend", mapDay);
+  }, [mapDay]);
+
   // const selectvalue = (e) => {
   //   maxstep = e.target.value;
   //   setMapstep(maxstep);
@@ -133,13 +142,13 @@ export const PackageBoardDetail = (props) => {
           </Typography>
           <Divider />
           <Container>
-            <select name="steps">
+            <select name="steps" onChange={daychange} defaultValue={0}>
               {Object.keys(board).length != 0
                 ? board.location.map((item, index) => {
-                    console.log("here");
-                    console.log(item);
-                    maxstep = index;
-                    console.log("max", maxstep);
+                    // console.log("here");
+                    // console.log(item);
+                    // maxstep = index;
+                    // console.log("max", maxstep);
                     return (
                       <option
                         key={index}
@@ -156,6 +165,7 @@ export const PackageBoardDetail = (props) => {
               isDetail={isDetail}
               board={board.location}
               maxstep={maxstep}
+              mapDay={mapDay}
             />
           </Container>
           <Container>

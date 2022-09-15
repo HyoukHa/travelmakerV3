@@ -20,16 +20,16 @@ const KakaoMap = ({
   isDetail,
   board,
   maxstep,
+  mapDay,
 }) => {
   //========================axois==================
   // useEffect(() => {
   //   console.log(board.location);
   // }, [board]);
 
-  // const [da, setDa] = useState(0);
   useEffect(() => {
     console.log("1");
-    console.log(board);
+    // console.log(board[0].x);
     if (board != undefined) {
       console.log(board[0]);
       console.log(board[1]);
@@ -57,7 +57,6 @@ const KakaoMap = ({
   const SendKeyword = () => {
     setAddress(keyword);
   };
-
   const Send_MAXDURATION = (e) => {
     setDuration(e.target.value);
     // console.log(Duration);
@@ -73,7 +72,7 @@ const KakaoMap = ({
         );
         const options = {
           center,
-          level: 1,
+          level: 7,
         };
         var map = new kakao.maps.Map(container, options);
         // 상세 주소로 검색하려면 이거 쓰세요 (거리명?)
@@ -85,10 +84,36 @@ const KakaoMap = ({
         //     map: map, // 마커를 표시할 지도
         //     title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         // });
-        //=======================pickmarker=================================
-        // var marker = new kakao.maps.Marker({
-        //   position: new kakao.maps.LatLng(),
-        // });
+        // //=======================pickmarker=================================
+        let map_x = 0;
+        let map_y = 0;
+        if (!isDetail && mapDay !== undefined && board !== undefined) {
+          console.log("marker를 찍어요");
+          console.log("board.length", board.length);
+          console.log(board);
+          for (var j = 0; j < board[mapDay].length; j++) {
+            console.log("오니?");
+            console.log("board.x", typeof Number(board[mapDay][j].x));
+            var location1 = new kakao.maps.LatLng(
+              Number(board[mapDay][j].y),
+              Number(board[mapDay][j].x)
+            );
+            map_x += Number(board[mapDay][j].x);
+            map_y += Number(board[mapDay][j].y);
+            var marker2 = new kakao.maps.Marker({
+              map: map,
+              position: location1,
+            });
+            marker2.setMap(map);
+          }
+          map.setCenter(
+            new kakao.maps.LatLng(
+              map_y / board[mapDay].length,
+              map_x / board[mapDay].length
+            )
+          );
+        }
+
         //==========================================================
         // isDetail ? (
         if (address === undefined) {
@@ -137,7 +162,7 @@ const KakaoMap = ({
       });
     };
     // container or address의 변동점이 있을때 rendering
-  }, [container, address, board]);
+  }, [container, address, board, mapDay]);
   return (
     <Container>
       {isDetail ? (
