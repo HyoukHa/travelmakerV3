@@ -81,7 +81,10 @@ const MyPage = () => {
 
   // 사용자의 정보를 불러올때 저장된 토큰값을 같이 보내준다.
   useEffect(() => {
-    if (JSON.parse(getSession("userInfo")).id == id) {
+    if (
+      getSession("userInfo") !== null &&
+      JSON.parse(getSession("userInfo")).id == id
+    ) {
       axios
         .get("/user/whoami", {
           headers: { Authorization: getSession("Authorization") },
@@ -118,7 +121,10 @@ const MyPage = () => {
   useEffect(() => {
     let i;
     for (i = 0; i < userLists.length; i++) {
-      if (userLists[i].targetUserId == JSON.parse(getSession("userInfo")).id) {
+      if (
+        getSession("userInfo") !== null &&
+        userLists[i].targetUserId == JSON.parse(getSession("userInfo")).id
+      ) {
         setIsFollow(true);
       }
     }
@@ -274,7 +280,8 @@ const MyPage = () => {
               </CardContent>
             </CardActionArea>
           </Card>
-          {id != JSON.parse(getSession("userInfo")).id ? (
+          {getSession("userInfo") !== null &&
+          id != JSON.parse(getSession("userInfo")).id ? (
             <Box marginTop="8px">
               {userInfo.follower === "" || isFollow ? (
                 <Button
@@ -304,11 +311,11 @@ const MyPage = () => {
         minHeight="10vh"
       ></Box>
       {/** 내가 작성한 판매 품목 불러오기 */}
-      <MyPackageBoard />
+      <MyPackageBoard userId={id} />
 
       {/** 내가 작성한 리뷰 불러오기 */}
 
-      <MyReviewBoard />
+      <MyReviewBoard userId={id} />
       {mine ? (
         <Box
           display="flex"

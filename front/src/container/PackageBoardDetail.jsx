@@ -17,7 +17,7 @@ import { Reply } from ".";
 import { css } from "@emotion/react";
 import { getSession } from "../config/session/session";
 
-export const PackageBoardDetail = ({ userId }) => {
+export const PackageBoardDetail = ({ page }) => {
   const [board, setBoard] = useState({});
   const [isJoin, setIsJoin] = useState(false);
   const [mapstep, setMapstep] = useState(0);
@@ -87,22 +87,24 @@ export const PackageBoardDetail = ({ userId }) => {
   }, [boardId]);
 
   const doJoin = () => {
-    axios({
-      url: "/packageboard/join",
-      method: "post",
-      data: parseInt(boardId),
-      headers: {
-        Authorization: getSession("Authorization"),
-        "Content-Type": "application/json; charset=utf-8",
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
-        setIsJoin(res.data);
+    if (getSession("userInfo") !== null) {
+      axios({
+        url: "/packageboard/join",
+        method: "post",
+        data: parseInt(boardId),
+        headers: {
+          Authorization: getSession("Authorization"),
+          "Content-Type": "application/json; charset=utf-8",
+        },
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((res) => {
+          console.log(res.data);
+          setIsJoin(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -172,7 +174,8 @@ export const PackageBoardDetail = ({ userId }) => {
           <Container>
             <Typography>{board.content}</Typography>
           </Container>
-          {userId === board.userId ? (
+          {getSession("userInfo") !== null &&
+          getSession("userInfo").id === board.userId ? (
             <Box display="flex" justifyContent="center" justifyItems="center">
               <Button>수정</Button>
               <Button>삭제</Button>

@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,10 @@ public class ReviewBoardService {
         return reviewBoardMapper.getReviewList((pagenum-1) * 8);
     }
 
+    public List<OutReviewCard> getMyReviewList(final int userId){
+        return reviewBoardMapper.getMyReviewList(userId);
+    }
+
     public Integer reviewCount() {
         return reviewBoardMapper.reviewCounter();
     }
@@ -43,7 +48,9 @@ public class ReviewBoardService {
 
         reviewBoardMapper.viewCounter(res);
 
-        System.out.println(res);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        res.put("written_date", sdf.format(res.get("written_date")));
 
         return res;
     }

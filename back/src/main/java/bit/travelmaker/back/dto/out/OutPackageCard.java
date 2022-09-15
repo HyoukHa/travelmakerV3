@@ -35,6 +35,8 @@ public class OutPackageCard {
 
     private Date written_date;
 
+    private String location;
+
     /**
      * packageboard에서 가져올 데이터
      */

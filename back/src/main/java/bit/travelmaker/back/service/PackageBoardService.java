@@ -87,8 +87,8 @@ public class PackageBoardService {
         return packageBoardMapper.packageCounter();
     }
 
-    public List<OutPackageCard> myPKCardPush(final int userId) {
-        return packageBoardMapper.myPKCardPusher(userId);
+    public List<OutPackageCard> getMyPackageList(final int userId) {
+        return packageBoardMapper.getMyPackageList(userId);
     }
 
     public Integer myPackageCount(final int userId) {return packageBoardMapper.myPackageCounter(userId);}

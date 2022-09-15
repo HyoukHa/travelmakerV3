@@ -3,20 +3,22 @@
 
 <mapper namespace="bit.travelmaker.back.mapper.ReviewBoardMapper">
     <select id="getDetailReview" parameterType="int" resultType="HashMap">
-        select r.id as id,
-               b.userId as userId,
-               b.title as title,
-               b.content as content,
-               b.imgs as imgs,
-               b.written_date as written_date,
-               b.viewCount as viewCount,
-               u.nickname as nickname,
-               r.packageBoardId as packageBoardId,
-               p.limit_to as limit_to,
-               p.duration as duration,
-               p.budget as budget,
-               p.location as location,
-               p.start_date as start_date
+        select
+            r.id as id,
+            b.userId as userId,
+            b.title as title,
+            b.content as content,
+            b.imgs as imgs,
+            b.written_date as written_date,
+            b.viewCount as viewCount,
+            u.nickname as nickname,
+            r.packageBoardId as packageBoardId,
+            p.limit_to as limit_to,
+            p.duration as duration,
+            p.budget as budget,
+            p.current_to as current_to,
+            p.location as location,
+            p.start_date as start_date
         from reviewboard as r
                  inner join board as b on r.id = b.id
                  inner join user as u on b.userId = u.id
@@ -38,6 +40,22 @@
             inner join `user` as u on b.userId = u.id
         order by b.id desc
             limit #{pageNum} , 8;
+    </select>
+
+    <select id="getMyReviewList" parameterType="int" resultType="OutReviewCard">
+        select r.id as id,
+               r.packageBoardId as packageBoardId,
+               b.userId as userId,
+               b.title as title,
+               b.content as content,
+               b.imgs as contentImg,
+               b.written_date,
+               u.src_photo as userImg
+        from `reviewboard` as r
+                 inner join `board` as b on r.id = b.id
+                 inner join `user` as u on b.userId = u.id
+        where userId = #{userId}
+        order by b.id desc;
     </select>
 
     <update id="viewCounter">

@@ -15,5 +15,7 @@ public interface ReviewBoardMapper {
 
     List<OutReviewCard> getReviewList(int pageNum);
 
+    List<OutReviewCard> getMyReviewList(int pageNum);
+
     Integer reviewCounter();
 }

@@ -16,7 +16,7 @@ import axios from "axios";
 import { getSession } from "../../../config/session/session";
 import { SignIn } from "../../../container";
 
-const PackageCard = ({ step, wish }) => {
+const PackageCard = ({ step, wish, page }) => {
   const navigate = useNavigate();
   const [isWished, setIsWished] = React.useState(false);
   const heartOn = () => {
@@ -49,7 +49,13 @@ const PackageCard = ({ step, wish }) => {
   };
 
   const cardClicked = () => {
-    navigate(`/board/package/detail/${step.id}`);
+    console.log("flag3");
+    console.log(page);
+    if (page === "package") {
+      navigate(`/board/package/detail/${step.id}`, page);
+    } else if (page === "review") {
+      navigate(`/board/review/detail/${step.id}`, page);
+    }
   };
 
   // useEffect(() => {
@@ -108,18 +114,20 @@ const PackageCard = ({ step, wish }) => {
           </Grid>
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={heartOn}>
-          {isWished ? (
-            <FavoriteIcon sx={{ color: "#ff002b" }} />
-          ) : (
-            <FavoriteBorderIcon />
-          )}
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-      </CardActions>
+      {page === "package" ? (
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites" onClick={heartOn}>
+            {isWished ? (
+              <FavoriteIcon sx={{ color: "#ff002b" }} />
+            ) : (
+              <FavoriteBorderIcon />
+            )}
+          </IconButton>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton>
+        </CardActions>
+      ) : null}
     </Card>
   );
 };

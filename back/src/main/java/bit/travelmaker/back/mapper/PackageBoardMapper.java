@@ -22,7 +22,7 @@ public interface PackageBoardMapper {
 
     List<OutPackageCard> getPackageList(int pageNum);
 
-    List<OutPackageCard> myPKCardPusher(int userId);
+    List<OutPackageCard> getMyPackageList(int userId);
 
     Integer packageCounter();
 

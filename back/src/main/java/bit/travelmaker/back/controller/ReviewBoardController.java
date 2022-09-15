@@ -26,6 +26,7 @@ public class ReviewBoardController {
      */
     @GetMapping(value = "/detail/{reviewId}")
     public ResponseEntity<?> getDetailReview(@PathVariable int reviewId) {
+        log.info("/api/reviewboard/detail/{reviewId}");
         HttpStatus status = HttpStatus.OK;
 
         HashMap<String, Object> res = reviewBoardService.getDetailReview(reviewId);
@@ -42,6 +43,7 @@ public class ReviewBoardController {
      */
     @PostMapping(value = "/write")
     public ResponseEntity<?> writeReview(@AuthenticationPrincipal int userId, @RequestBody HashMap<String, Object> req) {
+        System.out.println("/api/reviewboard/write");
         HttpStatus status = HttpStatus.OK;
 
         System.out.println(req);
@@ -55,6 +57,7 @@ public class ReviewBoardController {
 
     @GetMapping(value = "/{pageNum}")
     public ResponseEntity<?> getReviewCardList(@PathVariable int pageNum) {
+        System.out.println("/api/reviewboard/{pagenum}");
         HashMap<String, Object> response = new HashMap<>();
         HttpStatus status = HttpStatus.OK;
 
@@ -78,5 +81,14 @@ public class ReviewBoardController {
         response.put("count", count);
 
         return new ResponseEntity<>(response, status);
+    }
+
+    @GetMapping(value = "/my/{userId}")
+    public ResponseEntity<?> getMyReviewList(@PathVariable int userId) {
+        HttpStatus status = HttpStatus.OK;
+
+        List<OutReviewCard> res = reviewBoardService.getMyReviewList(userId);
+
+        return new ResponseEntity<>(res, status);
     }
 }

@@ -25,6 +25,7 @@ public class PackageBoardController {
      */
     @GetMapping(value = "/detail/{boardId}")
     public ResponseEntity<?> getDetailPackage(@PathVariable int boardId) {
+        log.info("/api/packageboard/");
         HttpStatus status = HttpStatus.OK;
 
         HashMap<String, Object> res = packageBoardService.getDetailPackage(boardId);
@@ -38,6 +39,7 @@ public class PackageBoardController {
      */
     @GetMapping(value = "/{pageNum}")
     public ResponseEntity<?> getPackageCardList(@PathVariable int pageNum){
+        log.info("/api/packageboard/");
         HashMap<String, Object> response = new HashMap<>();
 
         List<OutPackageCard> packageData = packageBoardService.getPackageList(pageNum);
@@ -62,6 +64,7 @@ public class PackageBoardController {
      */
     @PostMapping(value = "/write")
     public ResponseEntity<?> writePackage(@AuthenticationPrincipal int userId ,@RequestBody HashMap<String, Object> req) {
+        log.info("/api/packageboard/");
         HttpStatus status = HttpStatus.OK;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -90,6 +93,7 @@ public class PackageBoardController {
      */
     @PostMapping(value = "/join")
     public ResponseEntity<?> joinPackage(@AuthenticationPrincipal int userId, @RequestBody int packageId) {
+        log.info("/api/packageboard/");
         HttpStatus status = HttpStatus.OK;
 
         HashMap<String, Integer> req = new HashMap<>();
@@ -109,6 +113,7 @@ public class PackageBoardController {
      */
     @PostMapping(value = "/isjoin")
     public ResponseEntity<?> isJoin(@AuthenticationPrincipal int userId, @RequestBody int packageId) {
+        log.info("/api/packageboard/");
         HttpStatus status = HttpStatus.OK;
 
         HashMap<String, Integer> req = new HashMap<>();
@@ -125,6 +130,7 @@ public class PackageBoardController {
 
     @PostMapping(value = "/wish")
     public ResponseEntity<?> doWish(@AuthenticationPrincipal int userId, @RequestBody int boardId) {
+        log.info("/api/packageboard/");
         HttpStatus status = HttpStatus.OK;
 
         HashMap<String, Object> req = new HashMap<>();
@@ -140,6 +146,7 @@ public class PackageBoardController {
 
     @PostMapping(value = "/iswish")
     public ResponseEntity<?> isWish(@AuthenticationPrincipal int userId, @RequestBody List<Integer> req) {
+        log.info("/api/packageboard/");
         HttpStatus status = HttpStatus.OK;
 
         System.out.println("req");
@@ -170,6 +177,15 @@ public class PackageBoardController {
 //        for(Integer i : req) {
 ////            packageBoardService.
 //        }
+
+        return new ResponseEntity<>(res, status);
+    }
+
+    @GetMapping(value = "/my/{userId}")
+    public ResponseEntity<?> getMyPackageList(@PathVariable int userId) {
+        HttpStatus status = HttpStatus.OK;
+
+        List<OutPackageCard> res = packageBoardService.getMyPackageList(userId);
 
         return new ResponseEntity<>(res, status);
     }

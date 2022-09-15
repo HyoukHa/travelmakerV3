@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { getSession } from "../config/session/session";
 import PackageCard from "../package/components/element/PackageCard";
 
-const MyReviewBoard = () => {
+const MyReviewBoard = ({ userId }) => {
   const [write, setWrite] = useState([]);
   const navigate = useNavigate();
   const onClickBoardPage = () => {};
   useEffect(() => {
     // 사용자의 정보를 불러올때 저장된 토큰값을 같이 보내준다.
     axios
-      .get("/reviewboard/my", {
+      .get(`/reviewboard/my/${userId}`, {
         headers: { Authorization: getSession("Authorization") },
       })
       .then((res) => {

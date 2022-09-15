@@ -23,7 +23,10 @@
             p.current_to as current_to,
             p.duration as duration,
             p.location as location
-            from board as b inner join packageboard as p on b.id = p.id inner join user as u on b.userId = u.id where b.id = #{boardId};
+        from board as b
+            inner join packageboard as p on b.id = p.id
+            inner join user as u on b.userId = u.id
+        where b.id = #{boardId};
     </select>
 
     <insert id="joinPackage" parameterType="HashMap">
@@ -59,12 +62,22 @@
         order by b.id desc limit #{pageNum} , 8;
     </select>
 
-    <select id="myPKCardPusher" parameterType="int" resultType="OutPackageCard">
-        select b.id, b.userId, b.title, b.imgs as contentImg, b.written_date, u.src_photo as userImg, p.budget, p.duration from `board` as b
-            inner join `user` as u on b.userId = u.id
-            inner join `packageboard` as p on b.id = p.id
-            where b.userId = #{userId}
-        order by b.id desc
+    <select id="getMyPackageList" parameterType="int" resultType="OutPackageCard">
+        select b.id,
+               b.userId,
+               b.title,
+               b.imgs as contentImg,
+               b.written_date,
+               u.src_photo as userImg,
+               p.budget,
+               p.duration,
+               p.limit_to,
+               p.current_to
+        from `packageboard` as p
+                 inner join `board` as b on p.id = b.id
+                 inner join `user` as u on b.userId = u.id
+        where u.id = #{userId}
+        order by b.id desc;
     </select>
 
     <select id="packageCounter" resultType="int">
