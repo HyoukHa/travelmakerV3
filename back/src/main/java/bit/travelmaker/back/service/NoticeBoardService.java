@@ -1,5 +1,6 @@
 package bit.travelmaker.back.service;
 
+import bit.travelmaker.back.dto.in.InNotice;
 import bit.travelmaker.back.dto.out.OutNotice;
 import bit.travelmaker.back.mapper.NoticeBoardMapper;
 import bit.travelmaker.back.persistence.BoardRepository;
@@ -19,14 +20,23 @@ public class NoticeBoardService {
     @Autowired
     private BoardRepository boardRepository;
 
-    public List<OutNotice> NoticeBoardList(int category){
-        return noticeBoardMapper.NoticeBoardList(category);
+    public List<OutNotice> noticeBoardList(int category){
+        return noticeBoardMapper.noticeBoardList(category);
     }
-    public List<OutNotice> NoticeBoardUpdate(int id){
-        return noticeBoardMapper.NoticeBoardUpdate(id);
+    public void noticeBoardUpdate( OutNotice outNotice){
+         noticeBoardMapper.noticeBoardUpdate(outNotice);
     }
 
-    public List<OutNotice> EventBoardList(int category){
-        return noticeBoardMapper.EventBoardList(category);
+    public List<OutNotice> eventBoardList(int category){
+        return noticeBoardMapper.eventBoardList(category);
+    }
+    public void insert(InNotice inNotice){
+        noticeBoardMapper.insert(inNotice);
+    }
+    public void noticeBoardCount(int id ,int viewCount){
+        noticeBoardMapper.noticeBoardCount(id,viewCount);
+    }
+    public void delete(int id){
+        noticeBoardMapper.delete(id);
     }
 }

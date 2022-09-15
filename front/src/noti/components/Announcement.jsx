@@ -3,17 +3,29 @@ import { useNavigate } from "react-router-dom";
 import MenuBar from "./MenuBar";
 
 const Announcement = ({ pageNum }) => {
-  const [pageCategory, setPageCategory] = useState();
+  const [pageCategory, setPageCategory] = useState(pageNum);
+  const [detailPage, setDetailPage] = useState({
+    detail: false,
+    boardId: 0,
+    pageNum: 0,
+  });
+  const [eventPage, setEventPage] = useState({
+    detail: false,
+    boardId: 0,
+    pageNum: 0,
+  });
   const navigate = useNavigate();
   useEffect(() => {
     if (pageCategory == 0) {
       navigate("/board/announcement/notice");
     } else if (pageCategory == 1) {
       navigate("/board/announcement/event");
-    } else if (pageCategory == 2) {
-      navigate("/board/announcement/qna");
     }
   }, [pageCategory]);
+  useEffect(() => {
+    setDetailPage({ ...detailPage, detail: false, boardId: 0 });
+    setEventPage({ ...eventPage, detail: false, boardId: 0 });
+  }, [pageNum, pageCategory]);
 
   return (
     <div>
@@ -21,6 +33,10 @@ const Announcement = ({ pageNum }) => {
         pageNum={pageNum}
         pageCategory={pageCategory}
         setPageCategory={setPageCategory}
+        eventPage={eventPage}
+        setEventPage={setEventPage}
+        detailPage={detailPage}
+        setDetailPage={setDetailPage}
       />
     </div>
   );

@@ -1,5 +1,6 @@
 package bit.travelmaker.back.mapper;
 
+import bit.travelmaker.back.dto.in.InNotice;
 import bit.travelmaker.back.dto.out.OutNotice;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -7,8 +8,12 @@ import java.util.List;
 
 @Mapper
 public interface NoticeBoardMapper {
-    List<OutNotice> NoticeBoardList(int category);
-    List<OutNotice> NoticeBoardUpdate(int id);
-    List<OutNotice> EventBoardList(int category);
+    List<OutNotice> noticeBoardList(int category);
+    void noticeBoardUpdate( OutNotice outNotice);
+    List<OutNotice> eventBoardList(int category);
+    void insert(InNotice inNotice);
+    void noticeBoardCount(int id, int viewCount);
+
+    void delete(int id);
 
 }

@@ -21,6 +21,8 @@ import FollowingList from "./follow/FollowingList";
 import Announcement from "../noti/components/Announcement";
 import NoticeDetail from "../noti/components/NoticeDetail";
 import Search from "./Search";
+import NoticeAndEventWrite from "../noti/components/NoticeAndEventWrite";
+import NoticeAndEventUpdate from "../noti/components/NoticeAndEventUpdate";
 
 const PageRouter = () => {
   return (
@@ -42,8 +44,13 @@ const PageRouter = () => {
           <Route exact path="/board/review" element={<ReviewBoard />} />
           <Route
             exact
-            path="/board/announcement/notice/:id"
-            element={<NoticeDetail />}
+            path="/board/announcement/writed"
+            element={<NoticeAndEventWrite />}
+          />
+          <Route
+            exact
+            path="/board/announcement/update/:id/:noticeAndEvent"
+            element={<NoticeAndEventUpdate />}
           />
           <Route exact path="/board/package/write" element={<WriteBoard />} />
           <Route exact path="/board/review/write" element={<WriteBoard />} />

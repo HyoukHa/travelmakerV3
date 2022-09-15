@@ -1,28 +1,24 @@
-/**
- * NoticeDetail.jsx - 공지 게시판
- */
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getSession } from "../../config/session/session";
 
-const NoticeDetail = ({ detailPage, setDetailPage = () => {} }) => {
+const EventDetail = ({ eventPage, setEventPage = () => {} }) => {
   const navigate = useNavigate();
-  const [noticeDetail, setNoticeDetail] = useState([]);
-  const [noticeNum, setNoticeNum] = useState(0);
+  const [eventDetail, setEventDetail] = useState([]);
+  const [eventNum, setEventNum] = useState(0);
   // 이전글
-  const [previousNotice, setPreviousNotice] = useState([]);
+  const [previousEvent, setPreviousEvent] = useState([]);
   // 다음글
-  const [nextNotice, setnextNotice] = useState([]);
+  const [nextEvent, setNextEvent] = useState([]);
 
-  const noticeUpdateHandler = () => {
-    navigate("/board/announcement/update/" + noticeDetail.id + "/notice");
+  const eventUpdateHandler = () => {
+    navigate("/board/announcement/update/" + eventDetail.id + "/event");
   };
-
   const deleteHandler = () => {
     axios
-      .post("/noticeandevent/delete", noticeDetail.id, {
+      .post("/noticeandevent/delete", eventDetail.id, {
         headers: {
           Authorization: getSession("Authorization"),
           "Content-Type": "application/json; charset=utf-8",
@@ -30,55 +26,55 @@ const NoticeDetail = ({ detailPage, setDetailPage = () => {} }) => {
       })
       .then((res) => {
         console.log(res.status);
-        setDetailPage({ ...detailPage, detail: false });
+        setEventPage({ ...eventPage, detail: false });
       })
       .catch();
   };
 
   const nextNoticeHandler = () => {
-    setDetailPage({
-      ...detailPage,
-      boardId: nextNotice.id,
+    setEventPage({
+      ...eventPage,
+      boardId: nextEvent.id,
     });
   };
 
   const previousNoticeHandler = () => {
-    setDetailPage({
-      ...detailPage,
-      boardId: previousNotice.id,
+    setEventPage({
+      ...eventPage,
+      boardId: previousEvent.id,
     });
   };
 
   useEffect(() => {
     let i;
-    setPreviousNotice([]);
-    setnextNotice([]);
-    for (i = 0; i < JSON.parse(getSession("noticeBoard")).length; i++) {
-      if (detailPage.boardId == JSON.parse(getSession("noticeBoard"))[i].id) {
-        setNoticeDetail(JSON.parse(getSession("noticeBoard"))[i]);
-        setNoticeNum(i);
+    setPreviousEvent([]);
+    setNextEvent([]);
+    for (i = 0; i < JSON.parse(getSession("eventBoard")).length; i++) {
+      if (eventPage.boardId == JSON.parse(getSession("eventBoard"))[i].id) {
+        setEventDetail(JSON.parse(getSession("eventBoard"))[i]);
+        setEventNum(i);
         if (i - 1 >= 0) {
-          setPreviousNotice(JSON.parse(getSession("noticeBoard"))[i - 1]);
+          setPreviousEvent(JSON.parse(getSession("eventBoard"))[i - 1]);
         }
-        if (i + 1 < JSON.parse(getSession("noticeBoard")).length) {
-          setnextNotice(JSON.parse(getSession("noticeBoard"))[i + 1]);
+        if (i + 1 < JSON.parse(getSession("eventBoard")).length) {
+          setNextEvent(JSON.parse(getSession("eventBoard"))[i + 1]);
         }
         if (i - 1 < 0) {
-          setPreviousNotice([]);
+          setPreviousEvent([]);
         }
-        if (i + 1 > JSON.parse(getSession("noticeBoard")).length) {
-          setnextNotice([]);
+        if (i + 1 > JSON.parse(getSession("eventBoard")).length) {
+          setNextEvent([]);
         }
       }
     }
-  }, [detailPage]);
+  }, [eventPage]);
 
   useEffect(() => {
-    if (noticeDetail.viewCount != null) {
+    if (eventDetail.viewCount != null) {
       axios
         .post(
-          `/noticeandevent/${detailPage.boardId}`,
-          noticeDetail.viewCount + 1,
+          `/noticeandevent/${eventPage.boardId}`,
+          eventDetail.viewCount + 1,
           {
             headers: {
               "Content-Type": "application/json; charset=utf-8",
@@ -90,21 +86,20 @@ const NoticeDetail = ({ detailPage, setDetailPage = () => {} }) => {
         })
         .catch();
     }
-  }, [noticeDetail]);
-
+  }, [eventDetail]);
   return (
     <Grid p={5} sx={{ display: "flex" }} container alignItems="center">
       <Grid item>
         <Typography component="div">
-          <h2>{noticeDetail.title}</h2>
+          <h2>{eventDetail.title}</h2>
         </Typography>
         <Grid sx={{ display: "flex" }} gap="10px" item>
           <Divider orientation="vertical" variant="middle" />
-          <span>{noticeDetail.written_date}</span>
+          <span>{eventDetail.written_date}</span>
           <span style={{ color: "#c2bdbd" }}>{"|"}</span>
-          <span>{noticeDetail.updated_date}</span>
+          <span>{eventDetail.updated_date}</span>
           <span style={{ color: "#c2bdbd" }}>{"|"}</span>
-          <span>{noticeDetail.viewCount}</span>
+          <span>{eventDetail.viewCount}</span>
         </Grid>
         <Divider
           sx={{ minHeight: "30px" }}
@@ -113,7 +108,7 @@ const NoticeDetail = ({ detailPage, setDetailPage = () => {} }) => {
           <h4>{"[안내]"}</h4>
         </Divider>
         <Grid>
-          <Typography component="div">{noticeDetail.content}</Typography>
+          <Typography component="div">{eventDetail.content}</Typography>
         </Grid>
 
         <Divider
@@ -122,18 +117,18 @@ const NoticeDetail = ({ detailPage, setDetailPage = () => {} }) => {
         >
           <h6>{"[목록]"}</h6>
         </Divider>
-        {previousNotice.length != 0 ? (
+        {previousEvent.length != 0 ? (
           <Grid onClick={previousNoticeHandler}>
             <Button>이전</Button>
-            <span>{previousNotice.title}</span>
+            <span>{previousEvent.title}</span>
           </Grid>
         ) : (
           <span></span>
         )}
-        {nextNotice.length != 0 ? (
+        {nextEvent.length != 0 ? (
           <Grid onClick={nextNoticeHandler}>
             <Button>다음</Button>
-            <span>{nextNotice.title}</span>
+            <span>{nextEvent.title}</span>
           </Grid>
         ) : (
           <span></span>
@@ -142,7 +137,7 @@ const NoticeDetail = ({ detailPage, setDetailPage = () => {} }) => {
           JSON.parse(getSession("userInfo")).rank === 1 ? (
             <Grid marginTop="5vh" gap="80%" sx={{ display: "flex" }}>
               <Grid>
-                <Button onClick={noticeUpdateHandler} variant="contained">
+                <Button onClick={eventUpdateHandler} variant="contained">
                   수정
                 </Button>
               </Grid>
@@ -163,4 +158,4 @@ const NoticeDetail = ({ detailPage, setDetailPage = () => {} }) => {
   );
 };
 
-export default NoticeDetail;
+export default EventDetail;
