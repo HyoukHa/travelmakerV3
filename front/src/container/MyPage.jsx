@@ -11,7 +11,6 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import DeleteIcon from "@mui/icons-material/Delete";
 /** @jsxImportSource @emotion/react */
 import {
   Avatar,
@@ -28,7 +27,6 @@ import {
   Modal,
   OutlinedInput,
   Typography,
-  FilledInput,
 } from "@mui/material";
 import axios from "axios";
 import Visibility from "@mui/icons-material/Visibility";
@@ -37,7 +35,6 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { getSession } from "../config/session/session";
 import MyPackageBoard from "./MyPackageBoard";
 import MyReviewBoard from "./MyReviewBoard";
-import { render } from "react-dom";
 
 const style = {
   position: "absolute",
@@ -305,9 +302,7 @@ const MyPage = () => {
       ></Box>
       {/** 내가 작성한 판매 품목 불러오기 */}
       <MyPackageBoard />
-
       {/** 내가 작성한 리뷰 불러오기 */}
-
       <MyReviewBoard />
       {mine ? (
         <Box
