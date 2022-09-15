@@ -24,6 +24,8 @@ public interface PackageBoardMapper {
 
     List<OutPackageCard> getMyPackageList(int userId);
 
+    List<HashMap<String, Object>> getPopularPackageList();
+
     Integer packageCounter();
 
     Integer myPackageCounter(int userId);
@@ -33,6 +35,8 @@ public interface PackageBoardMapper {
     void doWish(final HashMap<String, Object> req);
 
     void undoWish(final int id);
+
+    List<HashMap<String, Object>> joinPackageList(final Integer userId);
 
     List<HashMap<String, Object>> isWish(HashMap<String, Object> req);
 }

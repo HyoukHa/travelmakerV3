@@ -5,7 +5,7 @@
  * 작성일 : 22_08_22
  */
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -24,8 +24,8 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import Consent from "./Consent";
-import {useNavigate} from "react-router-dom";
-import {setSession} from "../config/session/session";
+import { useNavigate } from "react-router-dom";
+import { setSession } from "../config/session/session";
 
 const style = {
   register: {
@@ -177,28 +177,28 @@ const SignUp = () => {
   // 아이디 중복검사
   const usernameCheck = () => {
     axios
-      .post("/user/check/username", {username: userInfo.username})
+      .post("/user/check/username", { username: userInfo.username })
       .then((res) => {
         // 존재하면 false, 존재하지 않으면 true로 변환함
-        setUserCheck({...userCheck, username: !res.data});
-        setSuccessInfo({...successInfo, username: true});
+        setUserCheck({ ...userCheck, username: !res.data });
+        setSuccessInfo({ ...successInfo, username: true });
       })
       .catch(() => {
-        setSuccessInfo({...successInfo, username: false});
+        setSuccessInfo({ ...successInfo, username: false });
       });
   };
 
   // 닉네임 중복검사
   const nicknameCheck = () => {
     axios
-      .post("/user/check/nickname", {nickname: userInfo.nickname})
+      .post("/user/check/nickname", { nickname: userInfo.nickname })
       .then((res) => {
-        setUserCheck({...userCheck, nickname: !res.data});
-        setSuccessInfo({...successInfo, nickname: true});
+        setUserCheck({ ...userCheck, nickname: !res.data });
+        setSuccessInfo({ ...successInfo, nickname: true });
         console.log(res.data);
       })
       .catch(() => {
-        setSuccessInfo({...successInfo, nickname: false});
+        setSuccessInfo({ ...successInfo, nickname: false });
       });
   };
 
@@ -208,13 +208,14 @@ const SignUp = () => {
     setCertified(true);
     // 중복검사 이메일 인증 전송 및 코드창 열기
     axios
-      .post("/mail/check/email", {email: userInfo.email})
+      .post("/mail/check/email", { email: userInfo.email })
       .then((res) => {
         console.log(res.data);
         console.log(res.status);
         if (res.status === 200) {
-          setUserCheck({...userCheck, email: true});
+          setUserCheck({ ...userCheck, email: true });
           setMailCode(String(res.data));
+          console.log(res.data);
         }
       })
       .catch(() => {
@@ -237,9 +238,11 @@ const SignUp = () => {
     ) {
       setInfoCreate(false);
       axios
-        .post("/user/signup", {...userInfo, rank: 3})
+        .post("/user/signup", { ...userInfo, rank: 3 })
         .then((res) => {
+          console.log(res.data);
           setSession("Authorization", res.data.token);
+          setSession("userInfo", JSON.stringify(res.data));
           navigate("/");
         })
         .catch((error) => {
@@ -260,26 +263,26 @@ const SignUp = () => {
   useEffect(() => {
     setSuccessInfo(false);
     if (userInfo.username == "") {
-      setValidate({...validate, username: true});
+      setValidate({ ...validate, username: true });
     } else if (userInfo.username.length < 5) {
-      setValidate({...validate, username: false});
+      setValidate({ ...validate, username: false });
     } else if (!validateSample.usernameRegex.test(userInfo.username)) {
-      setValidate({...validate, username: false});
+      setValidate({ ...validate, username: false });
     } else {
-      setValidate({...validate, username: true});
+      setValidate({ ...validate, username: true });
     }
-    setUserCheck({...userCheck, username: false});
+    setUserCheck({ ...userCheck, username: false });
   }, [userInfo.username]);
 
   // 패스워드 유효성 검사 실행
   useEffect(() => {
     if (userInfo.password === "") {
-      setValidate({...validate, password: true});
+      setValidate({ ...validate, password: true });
     } else {
       if (validateSample.passwordRegex.test(userInfo.password)) {
-        setValidate({...validate, password: true});
+        setValidate({ ...validate, password: true });
       } else {
-        setValidate({...validate, password: false});
+        setValidate({ ...validate, password: false });
       }
     }
   }, [userInfo.password]);
@@ -287,49 +290,49 @@ const SignUp = () => {
   // 패스워드 입력값이 같은지 확인 후 다르면 경고 메시지 출력
   useEffect(() => {
     if (userInfo.password === userInfo.passwordChecker) {
-      setValidate({...validate, passwordChecked: true});
+      setValidate({ ...validate, passwordChecked: true });
     } else if (userInfo.passwordChecker === "") {
-      setValidate({...validate, passwordChecked: true});
+      setValidate({ ...validate, passwordChecked: true });
     } else {
-      setValidate({...validate, passwordChecked: false});
+      setValidate({ ...validate, passwordChecked: false });
     }
   }, [userInfo.passwordChecker]);
 
   // 이름 유효성 검사
   useEffect(() => {
     if (userInfo.f_name === "") {
-      setValidate({...validate, nameCheck: false});
+      setValidate({ ...validate, nameCheck: false });
     } else if (userInfo.l_name === "") {
-      setValidate({...validate, nameCheck: false});
+      setValidate({ ...validate, nameCheck: false });
     } else {
-      setValidate({...validate, nameCheck: true});
+      setValidate({ ...validate, nameCheck: true });
     }
   }, [userInfo.f_name, userInfo.l_name]);
 
   // 닉네임 유효성 검사
   useEffect(() => {
-    setSuccessInfo({...successInfo, nickname: false});
+    setSuccessInfo({ ...successInfo, nickname: false });
     if (userInfo.nickname != "") {
-      setValidate({...validate, nickname: true});
+      setValidate({ ...validate, nickname: true });
     } else {
-      setValidate({...validate, nickname: false});
+      setValidate({ ...validate, nickname: false });
     }
   }, [userInfo.nickname]);
 
   // 이메일 형식 유효성 검사
   useEffect(() => {
     if (validateSample.emailRegex.test(userInfo.email)) {
-      setValidate({...validate, email: true});
+      setValidate({ ...validate, email: true });
     } else if (userInfo.email === "") {
-      setValidate({...validate, email: true});
+      setValidate({ ...validate, email: true });
     } else {
-      setValidate({...validate, email: false});
+      setValidate({ ...validate, email: false });
     }
   }, [userInfo.email]);
 
   // 입력값 받기
   const handleChange = (info) => (e) => {
-    setUserInfo({...userInfo, [info]: e.target.value});
+    setUserInfo({ ...userInfo, [info]: e.target.value });
   };
 
   // 패스워드의 입력 값을 확인하는 핸들러
@@ -367,9 +370,9 @@ const SignUp = () => {
   };
 
   return (
-    <div style={{margin: 50}}>
+    <div style={{ margin: 50 }}>
       <Box sx={style.register}>
-        <Typography component="h1" variant="h5" style={{textAlign: "center"}}>
+        <Typography component="h1" variant="h5" style={{ textAlign: "center" }}>
           회원가입
         </Typography>
         {/**아이디 입력 */}
@@ -378,11 +381,11 @@ const SignUp = () => {
             <p style={style.inputOutfont}>5자이상 입력해주세요</p>
           </div>
           <Grid container>
-            <Grid item sx={{display: "flex", height: "auto"}}>
+            <Grid item sx={{ display: "flex", height: "auto" }}>
               <FormControl
-                sx={{m: 1, width: "30ch"}}
+                sx={{ m: 1, width: "30ch" }}
                 variant="outlined"
-                style={{alignItems: "center"}}
+                style={{ alignItems: "center" }}
               >
                 <InputLabel htmlFor="outlined-adornment-id">ID*</InputLabel>
                 <OutlinedInput
@@ -396,23 +399,25 @@ const SignUp = () => {
                 />
               </FormControl>
               <Button
-                sx={{width: "10ch", height: "7ch", m: 1}}
+                sx={{ width: "10ch", height: "7ch", m: 1 }}
                 variant="contained"
                 onClick={usernameCheck}
-                style={{padding: 8}}
+                style={{ padding: 8 }}
               >
                 중복확인
               </Button>
             </Grid>
           </Grid>
           {/**아이디 확인 경고창*/}
-          <div style={{display: "flex", height: "30px", marginBottom: "20px"}}>
+          <div
+            style={{ display: "flex", height: "30px", marginBottom: "20px" }}
+          >
             {validate.username ? (
               !userCheck.username ? (
                 !successInfo.username ? (
                   <p>&nbsp;</p>
                 ) : (
-                  <p style={{paddingLeft: "10px", color: " blue"}}>
+                  <p style={{ paddingLeft: "10px", color: " blue" }}>
                     사용 가능한 아이디입니다.
                   </p>
                 )
@@ -434,9 +439,9 @@ const SignUp = () => {
             </p>
           </div>
           <FormControl
-            sx={{m: 1, width: "30ch"}}
+            sx={{ m: 1, width: "30ch" }}
             variant="outlined"
-            style={{alignItems: "center"}}
+            style={{ alignItems: "center" }}
           >
             <InputLabel htmlFor="outlined-adornment-password">
               Password*
@@ -463,7 +468,7 @@ const SignUp = () => {
             />
           </FormControl>
           {/**비밀번호 경고창*/}
-          <div style={{display: "flex"}}>
+          <div style={{ display: "flex" }}>
             {validate.password ? (
               <p>&nbsp;</p>
             ) : (
@@ -476,9 +481,9 @@ const SignUp = () => {
             <p style={style.inputOutfont}>비밀번호를 다시한번 입력해주세요.</p>
           </div>
           <FormControl
-            sx={{m: 1, width: "30ch"}}
+            sx={{ m: 1, width: "30ch" }}
             variant="outlined"
-            style={{alignItems: "center"}}
+            style={{ alignItems: "center" }}
           >
             <InputLabel htmlFor="outlined-adornment-password">
               PasswordCheck*
@@ -505,7 +510,7 @@ const SignUp = () => {
             />
           </FormControl>
           {/**비밀번호 확인 경고창*/}
-          <div style={{display: "flex"}}>
+          <div style={{ display: "flex" }}>
             {validate.passwordChecked ? (
               <p>&nbsp;</p>
             ) : (
@@ -518,11 +523,11 @@ const SignUp = () => {
             <p style={style.inputOutfont}>이름을 입력해주세요.</p>
           </div>
           <Grid container>
-            <Grid item sx={{display: "flex", height: "auto"}}>
+            <Grid item sx={{ display: "flex", height: "auto" }}>
               <FormControl
-                sx={{m: 1, width: "15ch"}}
+                sx={{ m: 1, width: "15ch" }}
                 variant="outlined"
-                style={{alignItems: "center"}}
+                style={{ alignItems: "center" }}
               >
                 <InputLabel htmlFor="outlined-adornment-id">성*</InputLabel>
                 <OutlinedInput
@@ -536,9 +541,9 @@ const SignUp = () => {
                 />
               </FormControl>
               <FormControl
-                sx={{m: 1, width: "15ch"}}
+                sx={{ m: 1, width: "15ch" }}
                 variant="outlined"
-                style={{alignItems: "center"}}
+                style={{ alignItems: "center" }}
               >
                 <InputLabel htmlFor="outlined-adornment-id">이름*</InputLabel>
                 <OutlinedInput
@@ -554,7 +559,9 @@ const SignUp = () => {
             </Grid>
           </Grid>
           {/**이름 확인 경고창*/}
-          <div style={{display: "flex", height: "30px", marginBottom: "20px"}}>
+          <div
+            style={{ display: "flex", height: "30px", marginBottom: "20px" }}
+          >
             {validate.nameCheck ? (
               <p>&nbsp;</p>
             ) : (
@@ -567,11 +574,11 @@ const SignUp = () => {
             <p style={style.inputOutfont}>사용하실 닉네임을 입력해주세요.</p>
           </div>
           <Grid container>
-            <Grid item sx={{display: "flex", height: "auto"}}>
+            <Grid item sx={{ display: "flex", height: "auto" }}>
               <FormControl
-                sx={{m: 1, width: "30ch"}}
+                sx={{ m: 1, width: "30ch" }}
                 variant="outlined"
-                style={{alignItems: "center"}}
+                style={{ alignItems: "center" }}
               >
                 <InputLabel htmlFor="outlined-adornment-nickname">
                   닉네임*
@@ -587,23 +594,25 @@ const SignUp = () => {
                 />
               </FormControl>
               <Button
-                sx={{width: "10ch", height: "7ch", m: 1}}
+                sx={{ width: "10ch", height: "7ch", m: 1 }}
                 variant="contained"
                 onClick={nicknameCheck}
-                style={{padding: 8}}
+                style={{ padding: 8 }}
               >
                 중복확인
               </Button>
             </Grid>
           </Grid>
           {/**닉네임 확인 경고창*/}
-          <div style={{display: "flex", height: "30px", marginBottom: "20px"}}>
+          <div
+            style={{ display: "flex", height: "30px", marginBottom: "20px" }}
+          >
             {validate.nickname ? (
               !userCheck.nickname ? (
                 !successInfo.nickname ? (
                   <p>&nbsp;</p>
                 ) : (
-                  <p style={{paddingLeft: "10px", color: " blue"}}>
+                  <p style={{ paddingLeft: "10px", color: " blue" }}>
                     사용 가능한 닉네임입니다.
                   </p>
                 )
@@ -624,11 +633,11 @@ const SignUp = () => {
               본인 확인을 위해 이메일을 입력 후 인증해주세요.
             </p>
           </div>
-          <Grid sx={{display: "flex", height: "auto"}}>
+          <Grid sx={{ display: "flex", height: "auto" }}>
             <FormControl
-              sx={{m: 1, width: "30ch"}}
+              sx={{ m: 1, width: "30ch" }}
               variant="outlined"
-              style={{alignItems: "center"}}
+              style={{ alignItems: "center" }}
             >
               <InputLabel htmlFor="outlined-adornment-email">Email*</InputLabel>
               <OutlinedInput
@@ -642,16 +651,16 @@ const SignUp = () => {
               />
             </FormControl>
             <Button
-              sx={{width: "10ch", height: "7ch", m: 1}}
+              sx={{ width: "10ch", height: "7ch", m: 1 }}
               variant="contained"
               onClick={emailCheckHandler}
-              style={{padding: 8}}
+              style={{ padding: 8 }}
             >
               코드받기
             </Button>
           </Grid>
           {/*이메일 확인 경고창*/}
-          <div style={{display: "flex"}}>
+          <div style={{ display: "flex" }}>
             {validate.email ? (
               <p>&nbsp;</p>
             ) : (
@@ -668,11 +677,11 @@ const SignUp = () => {
                   본인 확인을 위해 전송받은 코드를 인증해주세요.
                 </p>
               </div>
-              <Grid sx={{display: "flex", height: "auto"}}>
+              <Grid sx={{ display: "flex", height: "auto" }}>
                 <FormControl
-                  sx={{m: 1, width: "15ch"}}
+                  sx={{ m: 1, width: "15ch" }}
                   variant="outlined"
-                  style={{alignItems: "center"}}
+                  style={{ alignItems: "center" }}
                 >
                   <InputLabel htmlFor="outlined-adornment-code">
                     Code*
@@ -690,26 +699,26 @@ const SignUp = () => {
                 {/*이메일 인증 코드 확인 경고창*/}
 
                 <Button
-                  sx={{width: "10ch", height: "7ch", m: 1}}
+                  sx={{ width: "10ch", height: "7ch", m: 1 }}
                   variant="contained"
                   onClick={emailCheckHandler}
-                  style={{padding: 8}}
+                  style={{ padding: 8 }}
                 >
                   다시받기
                 </Button>
                 <Button
-                  sx={{width: "10ch", height: "7ch", m: 1}}
+                  sx={{ width: "10ch", height: "7ch", m: 1 }}
                   variant="contained"
                   onClick={emailCheckedHandler}
-                  style={{padding: 8}}
+                  style={{ padding: 8 }}
                 >
                   인증확인
                 </Button>
               </Grid>
 
-              <div style={{display: "flex"}}>
+              <div style={{ display: "flex" }}>
                 {emailSuccess ? (
-                  <p style={{paddingLeft: "10px", color: " blue"}}>
+                  <p style={{ paddingLeft: "10px", color: " blue" }}>
                     인증되었습니다.
                   </p>
                 ) : (
@@ -737,7 +746,7 @@ const SignUp = () => {
             </Button>
           </Grid>
           <Modal
-            style={{overflowY: "scroll"}}
+            style={{ overflowY: "scroll" }}
             open={consentOpen}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
@@ -747,7 +756,7 @@ const SignUp = () => {
               <Typography
                 component="h1"
                 variant="h5"
-                style={{textAlign: "center"}}
+                style={{ textAlign: "center" }}
               >
                 회원가입 동의 약관
               </Typography>
@@ -755,7 +764,7 @@ const SignUp = () => {
                 <Consent />
                 <Button
                   variant="contained"
-                  style={{marginTop: "10px"}}
+                  style={{ marginTop: "10px" }}
                   onClick={closeModal}
                 >
                   확인
@@ -767,8 +776,8 @@ const SignUp = () => {
             <Checkbox
               checked={checked}
               onChange={handleCheckBox}
-              inputProps={{"aria-label": "controlled"}}
-              style={{paddingTop: "0px"}}
+              inputProps={{ "aria-label": "controlled" }}
+              style={{ paddingTop: "0px" }}
             />
             <p
               style={{
@@ -776,23 +785,23 @@ const SignUp = () => {
                 fontSize: "15px",
               }}
             >
-              <span style={{color: "gray", fontSize: "14px"}}>
+              <span style={{ color: "gray", fontSize: "14px" }}>
                 (필수*) &nbsp;
               </span>
               회원가입약관의 내용에 동의합니다.
             </p>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item xs style={{paddingLeft: "40px"}}>
+            <Grid item xs style={{ paddingLeft: "40px" }}>
               <Button
                 variant="contained"
-                style={{marginTop: "10px"}}
+                style={{ marginTop: "10px" }}
                 onClick={noCreateUserHandler}
               >
                 취소하기
               </Button>
               <Modal
-                style={{overflowY: "scroll"}}
+                style={{ overflowY: "scroll" }}
                 open={infoNotCreate}
                 onClose={noCreateCloseModal}
                 aria-labelledby="modal-modal-title"
@@ -802,22 +811,22 @@ const SignUp = () => {
                   <Typography
                     component="h1"
                     variant="h5"
-                    style={{textAlign: "center"}}
+                    style={{ textAlign: "center" }}
                   >
                     정말로 취소하시겠습니까?
                   </Typography>
                   <Grid container spacing={3}>
-                    <Grid item xs style={{paddingLeft: "40px"}}>
+                    <Grid item xs style={{ paddingLeft: "40px" }}>
                       <Button
                         variant="contained"
-                        style={{marginTop: "10px"}}
+                        style={{ marginTop: "10px" }}
                         onClick={noCreateInfo}
                       >
                         네
                       </Button>
                       <Button
                         variant="contained"
-                        style={{marginTop: "10px", marginLeft: "160px"}}
+                        style={{ marginTop: "10px", marginLeft: "160px" }}
                         onClick={noCreateCloseModal}
                       >
                         아니오
@@ -832,12 +841,12 @@ const SignUp = () => {
               <Button
                 variant="contained"
                 onClick={createUserHandler}
-                style={{marginTop: "10px"}}
+                style={{ marginTop: "10px" }}
               >
                 회원가입
               </Button>
               <Modal
-                style={{overflowY: "scroll"}}
+                style={{ overflowY: "scroll" }}
                 open={infoCreate}
                 onClose={lastCheckCloseModal}
                 aria-labelledby="modal-modal-title"
@@ -847,15 +856,15 @@ const SignUp = () => {
                   <Typography
                     component="h1"
                     variant="h5"
-                    style={{textAlign: "center"}}
+                    style={{ textAlign: "center" }}
                   >
                     작성을 완료해 주시기 바랍니다.
                   </Typography>
                   <Grid container>
-                    <Grid item xs style={{paddingLeft: "43%"}}>
+                    <Grid item xs style={{ paddingLeft: "43%" }}>
                       <Button
                         variant="contained"
-                        style={{marginTop: "10px"}}
+                        style={{ marginTop: "10px" }}
                         onClick={lastCheckCloseModal}
                       >
                         확인

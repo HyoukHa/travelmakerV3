@@ -38,6 +38,7 @@ public class PackageBoardService {
         HashMap<String, Object> res = packageBoardMapper.getDetailPackage(boardId);
 
         res.put("viewCount", (Integer)res.get("viewCount") + 1);
+        System.out.println(res);
 
         packageBoardMapper.viewCounter(res);
 
@@ -81,6 +82,10 @@ public class PackageBoardService {
 
     public List<OutPackageCard> getPackageList(final Integer pageNum) {
         return packageBoardMapper.getPackageList((pageNum-1) * 8);
+    }
+
+    public List<HashMap<String, Object>> getPopularPackageList() {
+        return packageBoardMapper.getPopularPackageList();
     }
 
     public Integer packageCount(){
@@ -147,5 +152,9 @@ public class PackageBoardService {
         }
 
         return res;
+    }
+
+    public List<HashMap<String, Object>> joinPackageList(final Integer userId) {
+        return packageBoardMapper.joinPackageList(userId);
     }
 }

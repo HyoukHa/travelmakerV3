@@ -64,7 +64,7 @@ public class PackageBoardController {
      */
     @PostMapping(value = "/write")
     public ResponseEntity<?> writePackage(@AuthenticationPrincipal int userId ,@RequestBody HashMap<String, Object> req) {
-        log.info("/api/packageboard/");
+        log.info("/api/packageboard/write");
         HttpStatus status = HttpStatus.OK;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -186,6 +186,24 @@ public class PackageBoardController {
         HttpStatus status = HttpStatus.OK;
 
         List<OutPackageCard> res = packageBoardService.getMyPackageList(userId);
+
+        return new ResponseEntity<>(res, status);
+    }
+
+    @GetMapping(value = "/popular")
+    public ResponseEntity<?> getPopularPackageList(){
+        HttpStatus status = HttpStatus.OK;
+
+        List<HashMap<String, Object>> res = packageBoardService.getPopularPackageList();
+
+        return new ResponseEntity<>(res, status);
+    }
+
+    @GetMapping(value = "/joinpackage")
+    public ResponseEntity<?> joinPackage(@AuthenticationPrincipal int userId) {
+        HttpStatus status = HttpStatus.OK;
+
+        List<HashMap<String, Object>> res = packageBoardService.joinPackageList(userId);
 
         return new ResponseEntity<>(res, status);
     }

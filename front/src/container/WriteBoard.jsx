@@ -148,7 +148,7 @@ const WriteBoard = () => {
         limit_to: parseInt(writeData.MAXTO),
         budget: parseInt(writeData.budged),
         duration: parseInt(Duration),
-        // imgurl: imgSrc,
+        imgs: imgSrc,
         // startdate: value.$y + "." + (value.$M + 1) + "." + value.$D,
         year: value.$y,
         month: value.$M,

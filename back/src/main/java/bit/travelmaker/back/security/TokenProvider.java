@@ -21,7 +21,7 @@ import java.util.Date;
 public class TokenProvider {
 
     // 30분
-    private final long ACCESS_TOKEN_VALIDATION_SECOND = 60 * 60 * 3;
+    private final long ACCESS_TOKEN_VALIDATION_SECOND = 60 * 60 * 12;
 
     // 1개월
     private final long REFRESH_TOKEN_VALIDATION_SECOND = 60 * 60 * 24 * 30;

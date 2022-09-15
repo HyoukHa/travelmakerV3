@@ -53,6 +53,7 @@ function Package({ id, page }) {
         })
       : ReviewBoard({ id: id })
           .then((res) => {
+            console.log(res.data);
             setCount(Number(res.data.count));
             setImages(res.data.reviewData);
           })

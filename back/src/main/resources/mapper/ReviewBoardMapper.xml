@@ -58,6 +58,10 @@
         order by b.id desc;
     </select>
 
+    <select id="getPopularReviewList" resultType="HashMap">
+        select b.id as id, b.title as title, b.content as label, b.imgs as imgs from reviewboard as r inner join board as b on r.id = b.id order by b.viewCount desc limit 8;
+    </select>
+
     <update id="viewCounter">
         update board set viewcount = #{viewCount} where id = #{id};
     </update>

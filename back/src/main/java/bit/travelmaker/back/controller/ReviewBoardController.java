@@ -1,6 +1,5 @@
 package bit.travelmaker.back.controller;
 
-import bit.travelmaker.back.dto.out.OutPackageCard;
 import bit.travelmaker.back.dto.out.OutReviewCard;
 import bit.travelmaker.back.service.ReviewBoardService;
 import lombok.extern.slf4j.Slf4j;
@@ -88,6 +87,18 @@ public class ReviewBoardController {
         HttpStatus status = HttpStatus.OK;
 
         List<OutReviewCard> res = reviewBoardService.getMyReviewList(userId);
+
+        return new ResponseEntity<>(res, status);
+    }
+
+    @GetMapping(value = "/popular")
+    public ResponseEntity<?> getPopularReviewList() {
+        log.error("1");
+        HttpStatus status = HttpStatus.OK;
+
+        List<HashMap<String, Object>> res = reviewBoardService.getPopularReviewList();
+        log.error("2");
+        System.out.println(res);
 
         return new ResponseEntity<>(res, status);
     }

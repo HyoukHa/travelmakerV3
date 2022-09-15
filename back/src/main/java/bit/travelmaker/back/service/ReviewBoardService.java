@@ -37,6 +37,10 @@ public class ReviewBoardService {
         return reviewBoardMapper.getMyReviewList(userId);
     }
 
+    public List<HashMap<String, Object>> getPopularReviewList() {
+        return reviewBoardMapper.getPopularReviewList();
+    }
+
     public Integer reviewCount() {
         return reviewBoardMapper.reviewCounter();
     }

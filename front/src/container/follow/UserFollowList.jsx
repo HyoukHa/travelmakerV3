@@ -32,6 +32,7 @@ const UserFollowList = ({ name }) => {
       axios
         .get(`/following/${id}`)
         .then((res) => {
+          console.log(res.data);
           setUserLists(res.data);
         })
         .catch(() => {});

@@ -8,7 +8,7 @@
 
     <select id="getDetailPackage" parameterType="int" resultType="HashMap">
         select
-            b.id as boardId,
+            b.id as id,
             b.title as title,
             b.content as content,
             b.written_date as written_date,
@@ -78,6 +78,22 @@
                  inner join `user` as u on b.userId = u.id
         where u.id = #{userId}
         order by b.id desc;
+    </select>
+
+    <select id="getJoinPackageList" parameterType="int" resultType="HashMap">
+        select * from joinpackage as j inner join packageboard as p on j.packageId = p.id inner join board as b in p.id = b.id where j.userId = #{userId};
+    </select>
+
+    <select id="getPopularPackageList" resultType="HashMap">
+        select
+            b.id as id,
+            b.title as title,
+            b.content as label,
+            b.imgs as imgs
+        from packageboard as p
+            inner join board as b on p.id = b.id
+        order by b.viewcount desc
+        limit 0, 8;
     </select>
 
     <select id="packageCounter" resultType="int">

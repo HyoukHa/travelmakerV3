@@ -83,7 +83,7 @@ const PageRouter = () => {
 };
 
 const cssWrapper = css`
-  padding: 80px 0 0 /* footer 높이만큼 패딩 주기 */ 0;
+  padding: 100px 0 0 /* footer 높이만큼 패딩 주기 */ 0;
 `;
 
 export default PageRouter;

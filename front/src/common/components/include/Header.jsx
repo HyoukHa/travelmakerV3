@@ -26,10 +26,6 @@ const navList = {
     { title: "패키지", link: "/board/package/1" },
     { title: "후기", link: "/board/review/1" },
   ],
-  Menu3: [
-    { title: "Menu3-1", link: "/link3-1" },
-    { title: "Menu3-2", link: "/link3-2" },
-  ],
   Menu4: [
     { title: "공지사항", link: "/board/announcement/notice" },
     { title: "이벤트", link: "/board/announcement/event" },
@@ -61,11 +57,6 @@ const Header = ({ isLogined, setIsLogined = () => {} }) => {
             />
             <DropDown
               // toggle={isToggle}
-              headName="알려줘"
-              menuList={navList.Menu3}
-            />
-            <DropDown
-              // toggle={isToggle}
               headName="공지사항"
               menuList={navList.Menu4}
             />
@@ -73,7 +64,7 @@ const Header = ({ isLogined, setIsLogined = () => {} }) => {
         </nav>
 
         <div className="header-right">
-          {isLogined ? (
+          {getSession("Authorization") !== null ? (
             <Profile
               img={JSON.parse(getSession("userInfo")).src_photo}
               isLogined={isLogined}

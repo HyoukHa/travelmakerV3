@@ -29,6 +29,7 @@ public class UserService {
 
     public void signUp(final InUser inUser) {
         inUser.setPassword(passwordEncoder.encode(inUser.getPassword()));
+        inUser.setDisabled(false);
         UserEntity userEntity = inUser.toEntity();
 
         userRepository.save(userEntity);
