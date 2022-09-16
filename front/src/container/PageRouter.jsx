@@ -74,7 +74,7 @@ const PageRouter = () => {
             element={<ReviewWriteBoard />}
           />
           {/* //================================ */}
-          <Route exact path="/board/review/write" element={<WriteBoard />} />
+          <Route exact path="/board/package/write" element={<WriteBoard />} />
           <Route
             exact
             path="/board/announcement/notice"

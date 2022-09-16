@@ -23,18 +23,8 @@ const KakaoMap = ({
   mapDay,
 }) => {
   //========================axois==================
-  // useEffect(() => {
-  //   console.log(board.location);
-  // }, [board]);
 
-  useEffect(() => {
-    console.log("1");
-    // console.log(board[0].x);
-    if (board != undefined) {
-      console.log(board[0]);
-      console.log(board[1]);
-    }
-  }, [board]);
+  useEffect(() => {}, [board]);
   //===================button control===================
   const [btnHandler, setBtnHandler] = React.useState(true);
   const btnClick = (e) => {
@@ -59,7 +49,6 @@ const KakaoMap = ({
   };
   const Send_MAXDURATION = (e) => {
     setDuration(e.target.value);
-    // console.log(Duration);
   };
 
   useEffect(() => {
@@ -88,12 +77,7 @@ const KakaoMap = ({
         let map_x = 0;
         let map_y = 0;
         if (!isDetail && mapDay !== undefined && board !== undefined) {
-          console.log("marker를 찍어요");
-          console.log("board.length", board.length);
-          console.log(board);
           for (var j = 0; j < board[mapDay].length; j++) {
-            console.log("오니?");
-            console.log("board.x", typeof Number(board[mapDay][j].x));
             var location1 = new kakao.maps.LatLng(
               Number(board[mapDay][j].y),
               Number(board[mapDay][j].x)
@@ -122,7 +106,6 @@ const KakaoMap = ({
           ps.keywordSearch(address, function (result, status) {
             if (!keyword.replace(/^\s+|\s+$/g, "") || result.length === 0) {
               let errormessage = "키워드를 확인하세요";
-              console.log("키워드를 확인하세요");
               // <AlertWrite errormessage={errormessage} />
             } else if (status === kakao.maps.services.Status.OK) {
               setKakaoMap(result);

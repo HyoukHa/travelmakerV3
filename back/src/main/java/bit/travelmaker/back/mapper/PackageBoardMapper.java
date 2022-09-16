@@ -36,7 +36,9 @@ public interface PackageBoardMapper {
 
     void undoWish(final int id);
 
-    List<HashMap<String, Object>> joinPackageList(final Integer userId);
+    List<HashMap<String, Object>> getJoinPackageList(final Integer userId);
 
     List<HashMap<String, Object>> isWish(HashMap<String, Object> req);
+
+    Integer joinCount(final Integer packageId);
 }

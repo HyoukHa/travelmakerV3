@@ -257,7 +257,7 @@ const MyInfoUpdate = () => {
   const handleChange = (info) => (e) => {
     setUserInfo({ ...userInfo, [info]: e.target.value });
   };
-  useEffect(() => { }, [userInfo]);
+  useEffect(() => {}, [userInfo]);
   // 패스워드의 입력 값을 확인하는 핸들러
   const handleClickShowPassword = () => {
     setUserInfo({

@@ -35,13 +35,11 @@ public class ReplyService {
         return true;
     }
 
-    public Boolean deleteReply(final int userId, final Reply reply){
+    public Boolean deleteReply(final Reply reply){
 
         ReplyEntity entity = replyRepository.findById(reply.getId()).get();
 
-        if(entity.getUserId() == userId) {
-            replyRepository.delete(entity);
-        }
+        replyRepository.delete(entity);
 
         return true;
     }

@@ -19,7 +19,13 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const PackageCarousel = ({ popularPackages }) => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(1);
-  const packageMaxSteps = popularPackages.length;
+  let packageMaxSteps;
+
+  React.useEffect(() => {
+    if (popularPackages !== undefined) {
+      packageMaxSteps = popularPackages.length;
+    }
+  }, [popularPackages]);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -45,7 +51,7 @@ const PackageCarousel = ({ popularPackages }) => {
           bgcolor: ` #cfe8fc`,
         }}
       >
-        {packageMaxSteps !== 0 ? (
+        {/* {packageMaxSteps !== 0 ? (
           <div style={{ width: "900px" }}>
             <Card
               sx={{ width: "100%", maxWidth: 900, m: 2 }}
@@ -98,7 +104,7 @@ const PackageCarousel = ({ popularPackages }) => {
               }
             />
           </div>
-        ) : null}
+        ) : null} */}
       </Box>
     </div>
   );

@@ -38,7 +38,7 @@ const Landing = () => {
       .catch();
 
     axios
-      .get("reviewboard/popular")
+      .get("/reviewboard/popular")
       .then((res) => {
         setPopularReview(res.data);
       })

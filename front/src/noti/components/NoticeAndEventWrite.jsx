@@ -113,6 +113,7 @@ const NoticeAndEventWrite = () => {
         left: "50%",
         transform: "translate(-50%,-50%)",
         justifyContent: "center",
+        marginTop: "30px",
       }}
     >
       <Box p={10}>

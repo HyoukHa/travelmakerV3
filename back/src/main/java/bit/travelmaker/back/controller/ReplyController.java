@@ -39,10 +39,10 @@ public class ReplyController {
     }
 
     @PostMapping(value = "/delete")
-    public ResponseEntity<?> deleteReply(@AuthenticationPrincipal int userId, @RequestBody Reply reply) {
+    public ResponseEntity<?> deleteReply(@RequestBody Reply reply) {
         HttpStatus status = HttpStatus.OK;
 
-        replyService.deleteReply(userId, reply);
+        replyService.deleteReply(reply);
 
         return new ResponseEntity<>(status);
     }

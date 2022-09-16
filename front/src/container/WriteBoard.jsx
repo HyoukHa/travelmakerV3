@@ -34,6 +34,7 @@ const steps = ["경로 설정", "내용 작성"];
 const WriteBoard = () => {
   //========================================
   const [isDetail, setisDetail] = React.useState(false);
+  let inputRef;
 
   //================mapapi========================
   const [keyword, setKeyword] = React.useState("");
@@ -61,28 +62,31 @@ const WriteBoard = () => {
   };
   //===================================================================
   // img를 관리하는 state
-  const [imgSrc, setImgSrc] = React.useState([]);
+  const [imgSrc, setImgSrc] = React.useState("");
 
   const handleImgUpload = (e) => {
     // 이미지 값들 저장
-    const nowSelectImgList = e.target.files;
+    const nowSelectImgList = e.target.files[0];
+    console.log("123123123");
     console.log(nowSelectImgList);
     // formData 선언
     const formData = new FormData();
     // 업로드 할 값이 여러개로 for문을 사용하여
     // formData에 append를하여 RequestParam 값과 이미지값 저장
-    for (let i = 0; i < nowSelectImgList.length; i++) {
-      formData.append("multiPratFile", nowSelectImgList[i]);
-    }
+
+    formData.append("image", nowSelectImgList);
+
     console.log("1" + nowSelectImgList);
+    console.log(nowSelectImgList);
     console.log("2" + formData);
+    console.log(formData);
 
     //이미지 전송하여 s3에 올리기
     axios
-      .post("/board/upload", formData)
+      .post("/profile/upload", formData)
       .then((res) => {
-        console.log(res.FormData);
-        console.log(res.data, res.status);
+        console.log(res.data);
+        console.log(res.status);
         setImgSrc(res.data);
       })
       .catch((err) => {
@@ -105,8 +109,8 @@ const WriteBoard = () => {
     budged: "",
   });
 
-  const deletePh = (item) => (e) => {
-    setImgSrc(imgSrc.filter((element) => element !== item));
+  const deletePh = (e) => {
+    setImgSrc("");
   };
 
   const handleDataChange = (column) => (e) => {
@@ -202,7 +206,6 @@ const WriteBoard = () => {
               <Box
                 className="container"
                 sx={{
-                  backgroundColor: "pink",
                   minWidth: 300,
                   minHeight: 550,
                 }}
@@ -236,7 +239,6 @@ const WriteBoard = () => {
               <Box
                 className="container"
                 sx={{
-                  backgroundColor: "skyblue",
                   minWidth: 300,
                   minHeight: 650,
                 }}
@@ -301,35 +303,36 @@ const WriteBoard = () => {
                   <input
                     type="file"
                     accept="image/*"
-                    name="imgfile"
-                    required="이미지 파일이 아닙니다."
+                    name="image"
                     pattern="/(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/"
-                    multiple="multiple"
-                    hidden
                     onChange={handleImgUpload}
+                    // 클릭할 때 마다 file input의 value를 초기화 하지 않으면 버그가 발생할 수 있다
+                    // 사진 등록을 두개 띄우고 첫번째에 사진을 올리고 지우고 두번째에 같은 사진을 올리면 그 값이 남아있음!
+                    onClick={(e) => (e.target.value = null)}
+                    ref={(refParam) => (inputRef = refParam)}
+                    style={{ display: "none" }}
                   />
                 </Button>
                 {/*===== 사용할거니까 지우지 말아주세요===================================================== */}
-                <ImageList cols={8} sx={{ bgcolor: "black" }}>
-                  {imgSrc.map((item, index) => (
-                    <ImageListItem key={index}>
-                      <ImageListItemBar
-                        actionIcon={
-                          <IconButton
-                            sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                            onClick={deletePh(item)}
-                          >
-                            <ClearIcon />
-                          </IconButton>
-                        }
-                      />
-                      {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                      <img
-                        src={item}
-                        style={{ objectFit: "contain", marginTop: "10px" }}
-                      />
-                    </ImageListItem>
-                  ))}
+                <ImageList cols={8} sx={{}}>
+                  <ImageListItem>
+                    <ImageListItemBar
+                      sx={{ bgcolor: "inherit" }}
+                      actionIcon={
+                        <IconButton
+                          sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                          onClick={deletePh}
+                        >
+                          <ClearIcon />
+                        </IconButton>
+                      }
+                    />
+                    {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                    <img
+                      src={imgSrc}
+                      style={{ objectFit: "contain", marginTop: "10px" }}
+                    />
+                  </ImageListItem>
                 </ImageList>
               </Box>
             ) : (

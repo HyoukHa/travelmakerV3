@@ -155,6 +155,10 @@ public class PackageBoardService {
     }
 
     public List<HashMap<String, Object>> joinPackageList(final Integer userId) {
-        return packageBoardMapper.joinPackageList(userId);
+        return packageBoardMapper.getJoinPackageList(userId);
+    }
+
+    public Integer joinCount(final int packageId){
+        return packageBoardMapper.joinCount(packageId);
     }
 }

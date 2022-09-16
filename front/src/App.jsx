@@ -5,17 +5,14 @@ import Header from "./common/components/include/Header";
 import { getSession } from "./config/session/session";
 import PageRouter from "./container/PageRouter";
 
-
 function App() {
   const [isLogined, setIsLogined] = useState(false);
 
   useEffect(() => {
     if (getSession("Authorization") !== null) {
       setIsLogined(true);
-      // console.log("true");
     } else {
       setIsLogined(false);
-      // console.log("false");
     }
   }, []);
 

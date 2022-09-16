@@ -102,16 +102,20 @@ const PackageCard = ({ step, wish, page }) => {
           color="text.secondary"
           component="div"
         >
-          <Grid container justifyContent={"space-evenly"}>
-            {"참여인원"}
-            <br />
-            {step.current_to} / {step.limit_to}
-            {step.current_to === step.limit_to ? (
-              <SportsKabaddiIcon />
-            ) : (
-              <EmojiPeopleIcon />
-            )}
-          </Grid>
+          {page === "package" ? (
+            <Grid container justifyContent={"space-evenly"}>
+              {"참여인원"}
+              <br />
+              {step.current_to} / {step.limit_to}
+              {step.current_to === step.limit_to ? (
+                <SportsKabaddiIcon />
+              ) : (
+                <EmojiPeopleIcon />
+              )}
+            </Grid>
+          ) : (
+            step.content
+          )}
         </Typography>
       </CardContent>
       {page === "package" ? (

@@ -81,7 +81,7 @@
     </select>
 
     <select id="getJoinPackageList" parameterType="int" resultType="HashMap">
-        select * from joinpackage as j inner join packageboard as p on j.packageId = p.id inner join board as b in p.id = b.id where j.userId = #{userId};
+        select * from joinpackage as j inner join packageboard as p on j.packageId = p.id inner join board as b on p.id = b.id where j.userId = #{userId};
     </select>
 
     <select id="getPopularPackageList" resultType="HashMap">
@@ -123,5 +123,9 @@
         <foreach collection="boardList" item="item" index="index" open="(" close=")" separator=",">
             #{item}
         </foreach>
+    </select>
+
+    <select id="joinCount" parameterType="int" resultType="int">
+        select count(*) from joinpackage where packageId = #{packageId};
     </select>
 </mapper>

@@ -99,7 +99,8 @@ export const PackageBoardDetail = ({ page }) => {
       })
         .then((res) => {
           console.log(res.data);
-          setIsJoin(res.data);
+          setIsJoin(res.data.isJoin);
+          setBoard({ ...board, current_to: res.data.current_to });
         })
         .catch((error) => {
           console.log(error);

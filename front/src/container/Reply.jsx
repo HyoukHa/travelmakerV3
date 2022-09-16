@@ -39,6 +39,7 @@ const Reply = ({ boardId }) => {
       method: "get",
     })
       .then((res) => {
+        console.log("here123123");
         console.log(res.data);
         setReplyList(res.data);
       })

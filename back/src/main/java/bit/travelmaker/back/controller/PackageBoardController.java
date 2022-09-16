@@ -30,6 +30,10 @@ public class PackageBoardController {
 
         HashMap<String, Object> res = packageBoardService.getDetailPackage(boardId);
 
+        Integer current_to = packageBoardService.joinCount(boardId);
+
+        res.put("current_to", current_to);
+
         return new ResponseEntity<>(res, status);
     }
 
@@ -49,6 +53,12 @@ public class PackageBoardController {
 
         for(int i = 0 ; i < packageData.size() ; i++) {
             HashMap<String, Object> item = packageData.get(i).convertToHashmap();
+            System.out.println(item);
+
+            Integer packageId = packageData.get(i).getId();
+
+            Integer joinCount = packageBoardService.joinCount(packageId);
+            item.put("current_to", joinCount);
 
             packages.add(item);
         }
@@ -101,8 +111,11 @@ public class PackageBoardController {
         req.put("userId", userId);
         req.put("packageId", packageId);
 
-        System.out.println(req);
-        Boolean res = packageBoardService.doJoin(req);
+        HashMap<String, Object> res = new HashMap<>();
+        Boolean isJoin = packageBoardService.doJoin(req);
+        Integer current_to = packageBoardService.joinCount(packageId);
+        res.put("isJoin", isJoin);
+        res.put("current_to", current_to);
 
         return new ResponseEntity<>(res, status);
     }
