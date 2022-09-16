@@ -23,6 +23,8 @@ import NoticeDetail from "../noti/components/NoticeDetail";
 import Search from "./Search";
 import NoticeAndEventWrite from "../noti/components/NoticeAndEventWrite";
 import NoticeAndEventUpdate from "../noti/components/NoticeAndEventUpdate";
+import ReviewBoardDetail from "./ReviewBoardDetail";
+import ReviewWriteBoard from "./ReviewWriteBoard";
 
 const PageRouter = () => {
   return (
@@ -39,6 +41,11 @@ const PageRouter = () => {
             exact
             path={`/board/package/detail/:boardId`}
             element={<PackageBoardDetail />}
+          />
+          <Route
+            exact
+            path={`/board/review/detail/:boardId`}
+            element={<ReviewBoardDetail />}
           />
           <Route
             exact
@@ -60,7 +67,13 @@ const PageRouter = () => {
             path="/board/announcement/update/:id/:noticeAndEvent"
             element={<NoticeAndEventUpdate />}
           />
-          <Route exact path="/board/package/write" element={<WriteBoard />} />
+          {/* //============================= */}
+          <Route
+            exact
+            path="/board/review/write"
+            element={<ReviewWriteBoard />}
+          />
+          {/* //================================ */}
           <Route exact path="/board/review/write" element={<WriteBoard />} />
           <Route
             exact
@@ -74,7 +87,6 @@ const PageRouter = () => {
           />
           <Route exact path="/" element={<Landing />} />
           <Route path="/search/:param" element={<Search />} />
-
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
