@@ -2,8 +2,8 @@ import { Box, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MyReviewCarousel from "../common/components/carousel/MyReviewCarousel";
 import { getSession } from "../config/session/session";
-import PackageCard from "../package/components/element/PackageCard";
 
 const MyReviewBoard = ({ userId }) => {
   const [write, setWrite] = useState([]);
@@ -29,11 +29,10 @@ const MyReviewBoard = ({ userId }) => {
       minHeight="10vh"
       style={{ marginTop: "20px" }}
     >
-      <Grid item>
+      <Grid item style={{ width: "900px" }}>
         <Box
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(4,22%)",
             gap: "2%",
             justifyContent: `center`,
           }}
@@ -42,14 +41,11 @@ const MyReviewBoard = ({ userId }) => {
             gutterBottom
             variant="h5"
             component="div"
-            width="200px"
             textAlign="center"
           >
-            <span>등록한 리뷰</span>
+            <p>등록한 리뷰</p>
           </Typography>
-          {write.map((step, index) => (
-            <PackageCard key={index} step={step} onClick={onClickBoardPage} />
-          ))}
+          <MyReviewCarousel write={write} />
         </Box>
       </Grid>
     </Box>

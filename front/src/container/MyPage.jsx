@@ -306,13 +306,15 @@ const MyPage = () => {
         justifyContent="center"
         alignItems="center"
         minHeight="10vh"
+        sx={{ width: 900 }}
       ></Box>
-      {/** 내가 작성한 판매 품목 불러오기 */}
+      {/**  작성한 판매 품목 불러오기 */}
       <MyPackageBoard userId={id} />
 
-      {/** 내가 작성한 리뷰 불러오기 */}
+      {/**  작성한 리뷰 불러오기 */}
 
       <MyReviewBoard userId={id} />
+
       {mine ? (
         <Box
           display="flex"
