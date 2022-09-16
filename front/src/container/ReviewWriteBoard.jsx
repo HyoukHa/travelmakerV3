@@ -1,11 +1,14 @@
 import {
   Box,
+  Button,
   Container,
   Divider,
+  FormControl,
   IconButton,
   ImageList,
   ImageListItem,
   ImageListItemBar,
+  MenuItem,
   TextField,
   Typography,
 } from "@mui/material";
@@ -16,85 +19,75 @@ import ClearIcon from "@mui/icons-material/Clear";
 import KakaoMap from "../common/components/map/KakaoMap";
 import { getSession } from "../config/session/session";
 
-const ReviewWriteBoard = ({ userId }) => {
-  const [board, setBoard] = useState({});
-  const [mapstep, setMapstep] = useState(0);
-  const [isDetail, setisDetail] = useState(false);
-  const { boardId } = useParams();
-  const [mapDay, setMapDay] = useState(0);
+const ReviewWriteBoard = () => {
+  const [board, setBoard] = useState([]);
+  const [write, setWrite] = useState({});
   const [imgSrc, setImgSrc] = React.useState([]);
-  let maxstep = 0;
-
   const [writeData, setWriteData] = useState({
+    packageBoardId: 0,
     title: "",
     content: "",
+    imgs: "",
   });
+  let inputRef;
   const handleDataChange = (column) => (e) => {
     setWriteData({ ...writeData, [column]: e.target.value });
   };
-  const daychange = (e) => {
-    setMapDay(e.target.value);
-    console.log("지금 있는곳", e.target.value);
+
+  const selectvalue = (e) => {
+    setWrite(e.target.value);
   };
-  const handleImgUpload = (e) => {
-    // 이미지 값들 저장
-    const nowSelectImgList = e.target.files;
-    console.log(nowSelectImgList);
-    // formData 선언
+  const handleFileInput = (e) => {
+    const img = e.target.files[0];
     const formData = new FormData();
     // 업로드 할 값이 여러개로 for문을 사용하여
     // formData에 append를하여 RequestParam 값과 이미지값 저장
-    for (let i = 0; i < nowSelectImgList.length; i++) {
-      formData.append("multiPratFile", nowSelectImgList[i]);
-    }
-    console.log("1" + nowSelectImgList);
-    console.log("2" + formData);
+    formData.append("image", img);
 
     //이미지 전송하여 s3에 올리기
     axios
-      .post("/board/upload", formData)
+      .post("/profile/upload", formData)
       .then((res) => {
-        console.log(res.FormData);
-        console.log(res.data, res.status);
-        setImgSrc(res.data);
+        setWriteData({ ...writeData, imgs: res.data });
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const deletePh = (item) => (e) => {
-    setImgSrc(imgSrc.filter((element) => element !== item));
+  const deletePh = (e) => {
+    setImgSrc();
   };
+
   useEffect(() => {
     axios({
-      url: `/reviewboard/detail/${boardId}`,
+      url: `/packageboard/joinpackage`,
       method: "get",
       headers: {
+        Authorization: getSession("Authorization"),
         "Content-Type": "application/json; charset=utf-8",
       },
     })
       .then((res) => {
         console.log("321321");
         console.log(res.data);
-        setBoard({ ...res.data, location: JSON.parse(res.data.location) });
-        setMapstep(maxstep);
-        console.log(mapstep);
+        setBoard(res.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [boardId]);
-  const sendData = (e) => {
+  }, []);
+  useEffect(() => {}, [board, write, writeData, imgSrc]);
+  const sendData = () => {
     axios({
       url: "/reviewboard/write",
       method: "post",
       data: {
-        title: writeData.title,
-        content: writeData.content,
-        boardId: boardId,
-        // imgurl: imgSrc,
+        writeData,
       },
-      headers: { Authorization: getSession("Authorization") },
+      headers: {
+        Authorization: getSession("Authorization"),
+        "Content-Type": "application/json; charset=utf-8",
+      },
     })
       .then((res) => {
         console.log(res.data);
@@ -110,51 +103,35 @@ const ReviewWriteBoard = ({ userId }) => {
   return (
     <Container>
       <Box mt="59px" maxWidth="700px" mx="auto">
+        <FormControl sx={{ width: "150px" }}>
+          <TextField
+            id="outlined-select-title"
+            select
+            label="title*"
+            value={board.title}
+            onChange={selectvalue}
+            helperText="Please select package"
+          >
+            {board.map((item) => (
+              <MenuItem key={item.title} value={item.title}>
+                {item.title}
+              </MenuItem>
+            ))}
+          </TextField>
+        </FormControl>
         <Typography fontWeight="bold" textAlign="center" variant="h5">
-          {board.title}
+          {write.title}
         </Typography>
         <Divider />
-        <Divider />
-        <Typography>작성자 : {board.nickname}</Typography>
-        <Divider />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography>비용 : {board.budget}</Typography>
-          <Typography>기간 : {board.duration} 일</Typography>
+          <Typography>비용 : {write.budget}</Typography>
+          <Typography>기간 : {write.duration} 일</Typography>
         </div>
         <Divider />
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography>조회수 : {board.viewCount}</Typography>
-          <Typography>작성일 : {board.written_date}</Typography>
-        </div>
         <Divider />
         <Divider />
 
         <Container>
-          <select name="steps" onChange={daychange} defaultValue={0}>
-            {Object.keys(board).length != 0
-              ? board.location.map((item, index) => {
-                  // console.log("here");
-                  // console.log(item);
-                  // maxstep = index;
-                  // console.log("max", maxstep);
-                  return (
-                    <option
-                      key={index}
-                      value={index}
-                      // onChange={selectvalue}
-                    >
-                      {index + 1} 일차
-                    </option>
-                  );
-                })
-              : null}
-          </select>
-          <KakaoMap
-            isDetail={isDetail}
-            board={board.location}
-            maxstep={maxstep}
-            mapDay={mapDay}
-          />
           <TextField
             fullWidth
             style={{ marginTop: 5 }}
@@ -182,38 +159,41 @@ const ReviewWriteBoard = ({ userId }) => {
           />
           {/* 사진 */}
           {/*===== 사용할거니까 지우지 말아주세요===================================================== */}
-          {/* <Button variant="contained" component="label">
-                   파일 첨부
-                   <input
-                     type="file"
-                     accept="image/*"
-                     name="imgfile"
-                     required="이미지 파일이 아닙니다."
-                     pattern="/(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/"
-                     multiple="multiple"
-                     hidden
-                     onChange={handleImgUpload}
-                   />
-                 </Button> */}
+          <Button variant="contained" component="label">
+            파일 첨부
+            <input
+              type="file"
+              accept="image/*"
+              name="image"
+              pattern="/(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/"
+              onChange={handleFileInput}
+              // 클릭할 때 마다 file input의 value를 초기화 하지 않으면 버그가 발생할 수 있다
+              // 사진 등록을 두개 띄우고 첫번째에 사진을 올리고 지우고 두번째에 같은 사진을 올리면 그 값이 남아있음!
+              onClick={(e) => (e.target.value = null)}
+              ref={(refParam) => (inputRef = refParam)}
+              style={{ display: "none" }}
+            />
+          </Button>
           {/*===== 사용할거니까 지우지 말아주세요===================================================== */}
           <ImageList cols={8} sx={{ bgcolor: "black" }}>
-            {imgSrc.map((item, index) => (
-              <ImageListItem key={index}>
-                <ImageListItemBar
-                  actionIcon={
-                    <IconButton
-                      sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                      onClick={deletePh(item)}
-                    >
-                      <ClearIcon />
-                    </IconButton>
-                  }
-                />
-                {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                <img src={item} style={{ objectFit: "contain" }} />
-              </ImageListItem>
-            ))}
+            <ImageListItem>
+              <ImageListItemBar
+                actionIcon={
+                  <IconButton
+                    sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                    onClick={deletePh}
+                  >
+                    <ClearIcon />
+                  </IconButton>
+                }
+              />
+              {/* eslint-disable-next-line jsx-a11y/alt-text */}
+              <img src={imgSrc} style={{ objectFit: "contain" }} />
+            </ImageListItem>
           </ImageList>
+          <Button variant="contained" onClick={sendData}>
+            작성완료
+          </Button>
         </Container>
       </Box>
     </Container>

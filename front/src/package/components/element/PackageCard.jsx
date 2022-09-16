@@ -9,7 +9,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { PackageBoardDetail } from "../../../container/PackageBoardDetail";
 import { useNavigate } from "react-router";
 import axios from "axios";
@@ -19,6 +19,8 @@ import { SignIn } from "../../../container";
 const PackageCard = ({ step, wish, page }) => {
   const navigate = useNavigate();
   const [isWished, setIsWished] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
   const heartOn = () => {
     console.log(isWished);
     if (getSession("userInfo") !== null) {
@@ -39,7 +41,7 @@ const PackageCard = ({ step, wish, page }) => {
           console.log(error);
         });
     } else {
-      console.log("loginplz");
+      setOpen(true);
       // return <SignIn />;
     }
   };
@@ -127,6 +129,7 @@ const PackageCard = ({ step, wish, page }) => {
               <FavoriteBorderIcon />
             )}
           </IconButton>
+          <SignIn open={open} setOpen={setOpen} />
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>

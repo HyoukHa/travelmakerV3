@@ -20,6 +20,7 @@ import MainLogo from "../MainLogo";
 import { SignIn } from "../../../container";
 import { useNavigate } from "react-router";
 import { getSession } from "../../../config/session/session";
+import { Button } from "@mui/material";
 
 const navList = {
   게시판: [
@@ -37,7 +38,8 @@ const Header = ({ isLogined, setIsLogined = () => {} }) => {
   // const [isToggle, setIsToggle] = useState(false);
 
   useEffect(() => {}, []);
-
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
   return (
     <header className="header-wrapper" css={cssWrapper}>
       <div className="contents">
@@ -71,7 +73,17 @@ const Header = ({ isLogined, setIsLogined = () => {} }) => {
               setIsLogined={setIsLogined}
             />
           ) : (
-            <SignIn isLogined={isLogined} setIsLogined={setIsLogined} />
+            <div>
+              <Button onClick={handleOpen} variant="contained">
+                로그인
+              </Button>
+              <SignIn
+                isLogined={isLogined}
+                setIsLogined={setIsLogined}
+                open={open}
+                setOpen={setOpen}
+              />
+            </div>
           )}
         </div>
       </div>
