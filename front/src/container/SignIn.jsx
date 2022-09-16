@@ -43,13 +43,15 @@ const style = {
     color: " red",
   },
 };
+// 로그인 모달
 
-const SignIn = ({ isLogined, setIsLogined = () => {} }) => {
+const SignIn = ({
+  isLogined,
+  setIsLogined = () => {},
+  open,
+  setOpen = () => {},
+}) => {
   const navigate = useNavigate();
-
-  // 로그인 모달
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
 
   // 로그인 객체
   const [logIned, setLogIneds] = useState({
@@ -106,9 +108,6 @@ const SignIn = ({ isLogined, setIsLogined = () => {} }) => {
 
   return (
     <div>
-      <Button onClick={handleOpen} variant="contained">
-        로그인
-      </Button>
       {/* 여기가 mui modal */}
       <Modal
         open={open}
