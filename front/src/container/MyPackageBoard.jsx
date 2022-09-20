@@ -19,6 +19,8 @@ const MyPackageBoard = ({ userId }) => {
       })
       .then((res) => {
         setWrite(res.data);
+        console.log("1");
+        console.log(res.data);
       })
       .catch(() => {});
   }, []);

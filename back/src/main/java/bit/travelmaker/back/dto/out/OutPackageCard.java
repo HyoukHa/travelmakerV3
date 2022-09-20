@@ -31,7 +31,7 @@ public class OutPackageCard {
 
     private String title;
 
-    private String contentImg;
+    private String imgs;
 
     private Date written_date;
 
@@ -56,7 +56,7 @@ public class OutPackageCard {
         response.put("id", id);
         response.put("userId", userId);
         response.put("title", title);
-        response.put("contentImg", contentImg);
+        response.put("imgs", imgs);
         response.put("written_date", sdf.format(written_date));
         response.put("limit_to", limit_to);
         response.put("current_to", current_to);

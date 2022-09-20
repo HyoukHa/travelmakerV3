@@ -32,7 +32,7 @@
             b.userId as userId,
             b.title as title,
             b.content as content,
-            b.imgs as contentImg,
+            b.imgs as imgs,
             b.written_date,
             u.src_photo as userImg
         from `reviewboard` as r
@@ -48,7 +48,7 @@
                b.userId as userId,
                b.title as title,
                b.content as content,
-               b.imgs as contentImg,
+               b.imgs as imgs,
                b.written_date,
                u.src_photo as userImg
         from `reviewboard` as r

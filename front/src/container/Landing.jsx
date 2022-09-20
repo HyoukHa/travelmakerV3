@@ -33,7 +33,6 @@ const Landing = () => {
       .get("/packageboard/popular")
       .then((res) => {
         setPopularPackage(res.data);
-        console.log(res.data);
       })
       .catch();
 
@@ -76,6 +75,7 @@ const cssWrapper = css`
   > div + div {
     margin-top: 50px;
   }
+
   > .player-wrapper {
     position: relative;
     z-index: 0;

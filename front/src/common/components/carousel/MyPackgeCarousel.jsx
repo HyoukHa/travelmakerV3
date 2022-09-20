@@ -34,7 +34,6 @@ const MyPackgeCarousel = ({ write }) => {
           alignContent: "center",
           m: "auto",
           justifyContent: "center",
-          bgcolor: ` #cfe8fc`,
         }}
       >
         {packageMaxSteps !== 0 ? (
@@ -52,40 +51,41 @@ const MyPackgeCarousel = ({ write }) => {
                 ) : null
               )}
             </Card>
-
-            <MobileStepper
-              steps={packageMaxSteps - 2}
-              position="static"
-              activeStep={activeStep - 1}
-              nextButton={
-                <Button
-                  size="small"
-                  onClick={handleNext}
-                  disabled={activeStep === packageMaxSteps - 2}
-                >
-                  다음
-                  {theme.direction === "rtl" ? (
-                    <KeyboardArrowLeft />
-                  ) : (
-                    <KeyboardArrowRight />
-                  )}
-                </Button>
-              }
-              backButton={
-                <Button
-                  size="small"
-                  onClick={handleBack}
-                  disabled={activeStep === 1}
-                >
-                  {theme.direction === "rtl" ? (
-                    <KeyboardArrowRight />
-                  ) : (
-                    <KeyboardArrowLeft />
-                  )}
-                  이전
-                </Button>
-              }
-            />
+            {packageMaxSteps > 3 ? (
+              <MobileStepper
+                steps={packageMaxSteps - 2}
+                position="static"
+                activeStep={activeStep - 1}
+                nextButton={
+                  <Button
+                    size="small"
+                    onClick={handleNext}
+                    disabled={activeStep === packageMaxSteps - 2}
+                  >
+                    다음
+                    {theme.direction === "rtl" ? (
+                      <KeyboardArrowLeft />
+                    ) : (
+                      <KeyboardArrowRight />
+                    )}
+                  </Button>
+                }
+                backButton={
+                  <Button
+                    size="small"
+                    onClick={handleBack}
+                    disabled={activeStep === 1}
+                  >
+                    {theme.direction === "rtl" ? (
+                      <KeyboardArrowRight />
+                    ) : (
+                      <KeyboardArrowLeft />
+                    )}
+                    이전
+                  </Button>
+                }
+              />
+            ) : null}
           </>
         ) : null}
       </Box>

@@ -93,7 +93,7 @@ const PackageCard = ({ step, wish, page }) => {
       <CardMedia
         component="img"
         height="194"
-        image={step.contentImg} //게시물 인덱스
+        image={step.imgs} //게시물 인덱스
         onClick={cardClicked}
         // alt="Paella dish"
       />

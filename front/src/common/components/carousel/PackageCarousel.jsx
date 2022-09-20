@@ -19,13 +19,15 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const PackageCarousel = ({ popularPackages }) => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(1);
-  let packageMaxSteps;
+  const packageMaxSteps = popularPackages.length;
 
-  React.useEffect(() => {
-    if (popularPackages !== undefined) {
-      packageMaxSteps = popularPackages.length;
-    }
-  }, [popularPackages]);
+  // React.useEffect(() => {
+  //   console.log("123123");
+  //   console.log(popularPackages);
+  //   if (popularPackages !== undefined) {
+  //     packageMaxSteps = popularPackages.length;
+  //   }
+  // }, [popularPackages]);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -48,10 +50,9 @@ const PackageCarousel = ({ popularPackages }) => {
           alignContent: "center",
           m: "auto",
           justifyContent: "center",
-          bgcolor: ` #cfe8fc`,
         }}
       >
-        {/* {packageMaxSteps !== 0 ? (
+        {packageMaxSteps !== 0 ? (
           <div style={{ width: "900px" }}>
             <Card
               sx={{ width: "100%", maxWidth: 900, m: 2 }}
@@ -70,41 +71,43 @@ const PackageCarousel = ({ popularPackages }) => {
               )}
             </Card>
 
-            <MobileStepper
-              steps={packageMaxSteps - 2}
-              position="static"
-              activeStep={activeStep - 1}
-              nextButton={
-                <Button
-                  size="small"
-                  onClick={handleNext}
-                  disabled={activeStep === packageMaxSteps - 2}
-                >
-                  다음
-                  {theme.direction === "rtl" ? (
-                    <KeyboardArrowLeft />
-                  ) : (
-                    <KeyboardArrowRight />
-                  )}
-                </Button>
-              }
-              backButton={
-                <Button
-                  size="small"
-                  onClick={handleBack}
-                  disabled={activeStep === 1}
-                >
-                  {theme.direction === "rtl" ? (
-                    <KeyboardArrowRight />
-                  ) : (
-                    <KeyboardArrowLeft />
-                  )}
-                  이전
-                </Button>
-              }
-            />
+            {packageMaxSteps > 3 ? (
+              <MobileStepper
+                steps={packageMaxSteps - 2}
+                position="static"
+                activeStep={activeStep - 1}
+                nextButton={
+                  <Button
+                    size="small"
+                    onClick={handleNext}
+                    disabled={activeStep === packageMaxSteps - 2}
+                  >
+                    다음
+                    {theme.direction === "rtl" ? (
+                      <KeyboardArrowLeft />
+                    ) : (
+                      <KeyboardArrowRight />
+                    )}
+                  </Button>
+                }
+                backButton={
+                  <Button
+                    size="small"
+                    onClick={handleBack}
+                    disabled={activeStep === 1}
+                  >
+                    {theme.direction === "rtl" ? (
+                      <KeyboardArrowRight />
+                    ) : (
+                      <KeyboardArrowLeft />
+                    )}
+                    이전
+                  </Button>
+                }
+              />
+            ) : null}
           </div>
-        ) : null} */}
+        ) : null}
       </Box>
     </div>
   );

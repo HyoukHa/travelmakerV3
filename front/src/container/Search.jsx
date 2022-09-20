@@ -7,6 +7,8 @@ import { getSession } from "../config/session/session";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import PackageCarousel from "../common/components/carousel/PackageCarousel";
+import ReviewCarousel from "../common/components/carousel/ReviewCarousel";
 
 const Search = () => {
   const navigate = useNavigate();
@@ -36,10 +38,12 @@ const Search = () => {
       headers: { Authorization: getSession("Authorization") },
     })
       .then((res) => {
+        console.log("123");
         console.log(res.data);
         setNoticeBoard(res.data.notice);
         setPackageBoard(res.data.package);
         setReviewBoard(res.data.review);
+        console.log(res.data.package);
       })
       .catch((error) => {
         console.log(error);
@@ -58,17 +62,23 @@ const Search = () => {
       <div className="title">
         <h1>패키지</h1>
       </div>
-      <Carousel images={packageBoard} />
+      <div className="content">
+        <PackageCarousel popularPackages={packageBoard} />
+      </div>
 
       <div className="title">
         <h1>후기</h1>
       </div>
-      <Carousel images={reviewBoard} />
+      <div className="content">
+        <ReviewCarousel popularReviews={reviewBoard} />
+      </div>
 
       <div className="title">
         <h1>공지사항</h1>
       </div>
-      <Carousel images={noticeBoard} />
+      <div className="content">
+        <PackageCarousel popularPackages={noticeBoard} />
+      </div>
       {/* <Carousel images={images} /> */}
       {/* <Carousel images={images} />; */}
     </div>
@@ -82,8 +92,8 @@ const cssWrapper = css`
 
   > .title {
     margin: 30px auto;
-    /* text-align: center; */
-    transform: translateX(20%);
+    text-align: center;
+    transform: translateX(-25%);
   }
 `;
 

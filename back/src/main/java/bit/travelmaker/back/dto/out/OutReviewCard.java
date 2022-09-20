@@ -38,7 +38,7 @@ public class OutReviewCard {
 
     private String content;
 
-    private String contentImg;
+    private String imgs;
 
     private Date written_date;
 
@@ -52,7 +52,7 @@ public class OutReviewCard {
         response.put("userId", userId);
         response.put("title", title);
         response.put("content", content);
-        response.put("contentImg", contentImg);
+        response.put("imgs", imgs);
         response.put("written_date", sdf.format(written_date));
         response.put("userImg", userImg);
 //        response.put("", );
