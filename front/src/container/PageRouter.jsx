@@ -25,6 +25,7 @@ import NoticeAndEventWrite from "../noti/components/NoticeAndEventWrite";
 import NoticeAndEventUpdate from "../noti/components/NoticeAndEventUpdate";
 import ReviewBoardDetail from "./ReviewBoardDetail";
 import ReviewWriteBoard from "./ReviewWriteBoard";
+import KakaoRedirect from "../user/components/KakaoRedirect";
 
 const PageRouter = () => {
   return (
@@ -86,7 +87,12 @@ const PageRouter = () => {
             element={<Announcement pageNum={1} />}
           />
           <Route exact path="/" element={<Landing />} />
-          <Route path="/search/:param" element={<Search />} />
+          <Route exact path="/search/:param" element={<Search />} />
+          <Route
+            exact
+            path="/oauth2/kakao/callback"
+            element={<KakaoRedirect />}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

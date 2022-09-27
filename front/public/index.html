@@ -59,6 +59,30 @@
       src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=%REACT_APP_NAVER_DYNAMIC_MAP_KEY%&callback=CALLBACK_FUNCTION"
       defer="{false}"
     ></script>
+
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+      window.Kakao.init("b2f5e44c142dbe3f14f8182a809dda4b");
+
+      console.log("hello");
+      console.log(Kakao.isInitialized());
+
+      // const kakaoLogin = () => {
+      //   window.Kakao.Auth.login({
+      //     scope: "profile, account_email, gender",
+      //     success: (authObj) => {
+      //       console.log(authObj);
+      //       window.Kakao.API.request({
+      //         url: "/v2/user/me",
+      //         success: (res) => {
+      //           const kakao_account = res.kakao_account;
+      //           console.log(kakao_account);
+      //         },
+      //       });
+      //     },
+      //   });
+      // };
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
