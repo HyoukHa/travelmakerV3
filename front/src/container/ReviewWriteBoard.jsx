@@ -31,12 +31,18 @@ const ReviewWriteBoard = () => {
   });
   let inputRef;
   const handleDataChange = (column) => (e) => {
+    console.log("flag1");
     setWriteData({ ...writeData, [column]: e.target.value });
   };
 
   const selectvalue = (e) => {
-    setWrite(e.target.value);
+    setWrite(board.filter((item) => e.target.value === item.id)[0]);
   };
+
+  useEffect(() => {
+    console.log(write);
+  }, [write]);
+
   const handleFileInput = (e) => {
     const img = e.target.files[0];
     const formData = new FormData();
@@ -77,13 +83,12 @@ const ReviewWriteBoard = () => {
       });
   }, []);
   useEffect(() => {}, [board, write, writeData, imgSrc]);
+
   const sendData = () => {
     axios({
       url: "/reviewboard/write",
       method: "post",
-      data: {
-        writeData,
-      },
+      data: writeData,
       headers: {
         Authorization: getSession("Authorization"),
         "Content-Type": "application/json; charset=utf-8",
@@ -113,7 +118,7 @@ const ReviewWriteBoard = () => {
             helperText="Please select package"
           >
             {board.map((item) => (
-              <MenuItem key={item.title} value={item.title}>
+              <MenuItem key={item.title} value={item.id}>
                 {item.title}
               </MenuItem>
             ))}

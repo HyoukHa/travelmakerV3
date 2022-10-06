@@ -30,9 +30,6 @@ const Landing = () => {
     checked: false,
   });
 
-  let a =
-    "http://localhost:3000/oauth2/kakao/callback?code=jqvd90bl6CWMbROxvUvRF1nz1ul5l4XtYAIgvhf0iPjoe3z7aZrsGkkCsPoApCivIK1pQgorDKYAAAGDfaM7TQ";
-
   useEffect(() => {
     axios
       .get("/packageboard/popular")
@@ -62,14 +59,30 @@ const Landing = () => {
 
   const kakaoLogin = () => {
     Kakao.Auth.authorize({
-      redirectUri: "http://localhost:3000/oauth2/kakao/callback",
       scope: "profile, account_email, gender",
-      success: (authObj) => {
-        console.log("successing!");
-        console.log(authObj);
+      success: (res1) => {
+        console.log(res1);
+        Kakao.API.request({
+          url: "/v2/user/me",
+          success: (res2) => {
+            console.log(res2);
+            let user = res2.kakao_account;
+
+            const userinfo = document.querySelector("#userinfo");
+            if (userinfo) userinfo.value = JSON.stringify(user);
+          },
+        });
       },
-      // scope : 동의 란에 추가할 항목들 >> 설정해둔 개인정보 동의항목을 동의받기위한 부분을 추가하는 기능
     });
+    // Kakao.Auth.authorize({
+    //   redirectUri: "http://localhost:3000/oauth2/kakao/callback",
+    //   scope: "profile, account_email, gender",
+    //   success: (authObj) => {
+    //     console.log("successing!");
+    //     console.log(authObj);
+    //   },
+    //   // scope : 동의 란에 추가할 항목들 >> 설정해둔 개인정보 동의항목을 동의받기위한 부분을 추가하는 기능
+    // });
     // axios({
     //   url: "https://kauth.kakao.com/oauth/authorize?client_id=5a7ad09889dd0284f8b4e384bfa8c151$redirect_uri=http://localhost:3000/oauth2/kakao/callback$response_type=code",
     //   method: "get",
