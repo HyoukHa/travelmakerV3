@@ -14,12 +14,13 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ClearIcon from "@mui/icons-material/Clear";
 import KakaoMap from "../common/components/map/KakaoMap";
 import { getSession } from "../config/session/session";
 
 const ReviewWriteBoard = () => {
+  const navigate = useNavigate();
   const [board, setBoard] = useState([]);
   const [write, setWrite] = useState({});
   const [imgSrc, setImgSrc] = React.useState([]);
@@ -31,19 +32,22 @@ const ReviewWriteBoard = () => {
   });
   let inputRef;
   const handleDataChange = (column) => (e) => {
-    console.log("flag1");
+    console.log("reviewwriteboard flag1");
     setWriteData({ ...writeData, [column]: e.target.value });
   };
 
   const selectvalue = (e) => {
+    console.log("aaaa");
     setWrite(board.filter((item) => e.target.value === item.id)[0]);
   };
 
   useEffect(() => {
     console.log(write);
+    setWriteData({ ...writeData, packageBoardId: write.id });
   }, [write]);
 
   const handleFileInput = (e) => {
+    console.log("bbbb");
     const img = e.target.files[0];
     const formData = new FormData();
     // 업로드 할 값이 여러개로 for문을 사용하여
@@ -79,6 +83,7 @@ const ReviewWriteBoard = () => {
         setBoard(res.data);
       })
       .catch((error) => {
+        console.log("ccc");
         console.log(error);
       });
   }, []);
@@ -95,8 +100,9 @@ const ReviewWriteBoard = () => {
       },
     })
       .then((res) => {
+        console.log("iiii");
         console.log(res.data);
-        Navigate("/board/review/1");
+        navigate(`/board/review/detail/${res.data}`);
         return false;
       })
       .catch((error) => {

@@ -24,7 +24,7 @@ export const PackageBoardDetail = ({ page }) => {
   const [isDetail, setisDetail] = useState(false);
   const { boardId } = useParams();
   const [mapDay, setMapDay] = useState(0);
-  console.log("flag1"); //1
+  console.log("packageboard flag1"); //1
   console.log(board); //2
   let maxstep = 0;
   const daychange = (e) => {

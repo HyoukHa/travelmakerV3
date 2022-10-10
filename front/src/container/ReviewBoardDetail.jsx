@@ -17,13 +17,13 @@ import { Reply } from ".";
 import { css } from "@emotion/react";
 import { getSession } from "../config/session/session";
 
-export const ReviewBoardDetail = ({ userId }) => {
+export const ReviewBoardDetail = () => {
   const [board, setBoard] = useState({});
   const [mapstep, setMapstep] = useState(0);
   const [isDetail, setisDetail] = useState(false);
   const { boardId } = useParams();
   const [mapDay, setMapDay] = useState(0);
-  console.log("flag1"); //1
+  console.log("reviewboarddetail flag1"); //1
   console.log(board); //2
   let maxstep = 0;
   const daychange = (e) => {
@@ -35,6 +35,7 @@ export const ReviewBoardDetail = ({ userId }) => {
   }, [mapDay]);
 
   useEffect(() => {
+    console.log("boardId : " + boardId);
     axios({
       url: `/reviewboard/detail/${boardId}`,
       method: "get",
@@ -107,7 +108,8 @@ export const ReviewBoardDetail = ({ userId }) => {
           <Container>
             <Typography>{board.content}</Typography>
           </Container>
-          {userId === board.userId ? (
+          {getSession("userInfo") !== null &&
+          JSON.parse(getSession("userInfo")).id === board.userId ? (
             <Box display="flex" justifyContent="center" justifyItems="center">
               <Button>수정</Button>
               <Button>삭제</Button>

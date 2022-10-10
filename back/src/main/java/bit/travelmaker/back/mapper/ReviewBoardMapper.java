@@ -6,10 +6,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface ReviewBoardMapper {
-    HashMap<String, Object> getDetailReview(Integer reviewId);
+    Optional<HashMap<String, Object>> getDetailReview(Integer reviewId);
 
     void viewCounter(HashMap<String, Object> req);
 

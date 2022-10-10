@@ -246,7 +246,7 @@ const SignUp = () => {
           navigate("/");
         })
         .catch((error) => {
-          console.log("flag1");
+          console.log("signup flag1");
           console.log(error);
         });
     } else {

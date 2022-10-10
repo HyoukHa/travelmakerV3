@@ -46,8 +46,8 @@ public class ReviewBoardService {
     }
 
     public HashMap<String, Object> getDetailReview(final Integer reviewId) {
-        HashMap<String, Object> res = reviewBoardMapper.getDetailReview(reviewId);
-
+        HashMap<String, Object> res = reviewBoardMapper.getDetailReview(reviewId).get();
+        
         res.put("viewCount", (Integer)res.get("viewCount") + 1);
 
         reviewBoardMapper.viewCounter(res);

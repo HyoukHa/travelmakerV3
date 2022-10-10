@@ -28,10 +28,12 @@ public class ReviewBoardController {
         log.info("/api/reviewboard/detail/{reviewId}");
         HttpStatus status = HttpStatus.OK;
 
+        System.out.println("detail review 1");
         HashMap<String, Object> res = reviewBoardService.getDetailReview(reviewId);
 
+        System.out.println("detail review6");
         System.out.println("here");
-        System.out.println(res);
+        System.out.println(res.size());
 
         return new ResponseEntity<>(res, status);
     }
